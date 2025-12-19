@@ -1,7 +1,11 @@
 {
   "expo": {
     "name": "SistemaIntegrado",
+<<<<<<< HEAD
     "slug": "sistemaintegrado",
+=======
+    "slug": "SistemaIntegrado",
+>>>>>>> f9e8e5fe5191d419c2e186b24b07acd119501ac3
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,6 +17,7 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
+<<<<<<< HEAD
       "supportsTablet": true,
       "bundleIdentifier": "com.simpe1.sistemaintegrado",
       "infoPlist": {
@@ -21,6 +26,11 @@
     },
     "android": {
       "package": "com.simpe.sistemaintegrado",
+=======
+      "supportsTablet": true
+    },
+    "android": {
+>>>>>>> f9e8e5fe5191d419c2e186b24b07acd119501ac3
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -29,6 +39,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+<<<<<<< HEAD
     },
     "plugins": [
       "expo-font"
@@ -37,6 +48,8 @@
       "eas": {
         "projectId": "68d039db-959b-43ae-9e86-77f20216b558"
       }
+=======
+>>>>>>> f9e8e5fe5191d419c2e186b24b07acd119501ac3
     }
   }
 }

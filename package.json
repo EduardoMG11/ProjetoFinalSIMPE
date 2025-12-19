@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "expo start",
+<<<<<<< HEAD
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web"
@@ -32,6 +33,17 @@
     "react-native-safe-area-context": "^5.4.0",
     "react-native-screens": "~4.16.0",
     "react-native-web": "^0.21.0"
+=======
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "expo": "~54.0.22",
+    "expo-status-bar": "~3.0.8",
+    "react": "19.1.0",
+    "react-native": "0.81.5"
+>>>>>>> f9e8e5fe5191d419c2e186b24b07acd119501ac3
   },
   "private": true
 }
