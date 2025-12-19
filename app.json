@@ -14,7 +14,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.simpe.sistemaintegrado"
+      "bundleIdentifier": "com.simpe1.sistemaintegrado",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "com.simpe.sistemaintegrado",
