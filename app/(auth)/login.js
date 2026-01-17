@@ -1,29 +1,74 @@
-import { Text, View, StyleSheet } from "react-native";
-import { TextInput } from "react-native";
-import { TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
+import { useState } from "react";
+import auth from "@react-native-firebase/auth";
+import { useRouter } from "expo-router";
 
 export default function TelaLogIn() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
+
+  const signIn = async () => {
+    setLoading(true);
+    try {
+      await auth().signInWithEmailAndPassword(email, password);
+    } catch (error) {
+      const err = error.code;
+      if (err === "auth/invalid-email") {
+        alert("E-mail inválido");
+      } else if (err === "auth/wrong-password") {
+        alert("Senha incorreta");
+      } else if (err === "auth/user-not-found") {
+        alert("Usuário não encontrado");
+      } else {
+        alert("Erro desconhecido");
+        console.log(error);
+      }
+    } finally {
+      router.push("/(app)/homepage");
+      setLoading(false);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.text1}>
         Bem-vindo de volta. Faça login para continuar.
       </Text>
+
       <TextInput
         style={styles.input}
         placeholder="E-mail"
         keyboardType="email-address"
         autoCapitalize="none"
+        value={email}
+        onChangeText={setEmail}
       />
+
       <TextInput
         style={styles.input}
         placeholder="Senha"
-        secureTextEntry={true}
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
       />
+
       <TouchableOpacity
         style={styles.button}
-        //onPress={() => console.log("Login")}
+        onPress={signIn}
+        disabled={loading}
       >
-        <Text style={styles.buttonText}>Entrar</Text>
+        <Text style={styles.buttonText}>
+          {loading ? "Entrando..." : "Entrar"}
+        </Text>
       </TouchableOpacity>
     </View>
   );

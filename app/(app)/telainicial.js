@@ -8,9 +8,10 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useRouter } from "expo-router";
 
 export default function TelaInicial() {
-  const navigation = useNavigation();
+  const router = useRouter();
 
   return (
     <View style={styles.container}>
@@ -25,14 +26,14 @@ export default function TelaInicial() {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate("TelaRegistro")}
+          onPress={() => router.push("/(auth)/registro")}
         >
           <Text style={styles.buttonText}>Registrar-se</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate("TelaLogIn")}
+          onPress={() => router.push("/(auth)/login")}
         >
           <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>
