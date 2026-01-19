@@ -20,6 +20,7 @@ export default function TelaLogIn() {
     setLoading(true);
     try {
       await auth().signInWithEmailAndPassword(email, password);
+      router.push("/(app)/homepage");
     } catch (error) {
       const err = error.code;
       if (err === "auth/invalid-email") {
@@ -33,7 +34,6 @@ export default function TelaLogIn() {
         console.log(error);
       }
     } finally {
-      router.push("/(app)/homepage");
       setLoading(false);
     }
   };
@@ -77,7 +77,7 @@ export default function TelaLogIn() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#eeeeee",
+    backgroundColor: "#F4F7FB",
     justifyContent: "space-between",
     paddingVertical: 80,
     paddingHorizontal: 30,

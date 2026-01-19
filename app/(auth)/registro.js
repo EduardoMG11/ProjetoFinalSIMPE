@@ -8,6 +8,7 @@ import {
 import { useState } from "react";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
+import { router } from "expo-router";
 
 export default function TelaRegistro() {
   const [cnpj, setCnpj] = useState("");
@@ -35,6 +36,7 @@ export default function TelaRegistro() {
         email,
         senha,
       );
+      router.push("/(app)/homepage");
 
       const uid = userCredential.user.uid;
 
@@ -162,7 +164,7 @@ export default function TelaRegistro() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#eeeeee",
+    backgroundColor: "#F4F7FB",
     justifyContent: "space-between",
     paddingVertical: 80,
     paddingHorizontal: 30,
