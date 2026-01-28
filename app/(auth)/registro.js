@@ -8,7 +8,9 @@ import {
 import { useState } from "react";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
+import storage from "@react-native-firebase/storage";
 import { router } from "expo-router";
+import * as ImagePicker from "expo-image-picker";
 
 export default function TelaRegistro() {
   const [cnpj, setCnpj] = useState("");
@@ -21,7 +23,22 @@ export default function TelaRegistro() {
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [area, setArea] = useState("");
+  const [foto, setFoto] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const fotoPerfilUrl = async (uri) => {
+    const user = auth().currentUser;
+    if (!user) throw new Error("Usuário não autenticado");
+
+    const ref = storage().ref(`users/${user.uid}/profile.jpg`);
+
+    const response = await fetch(uri);
+    const blob = await response.blob();
+
+    await ref.put(blob);
+
+    return await ref.getDownloadURL();
+  };
 
   const handleRegister = async () => {
     if (senha !== confirmarSenha) {
@@ -36,9 +53,13 @@ export default function TelaRegistro() {
         email,
         senha,
       );
-      router.push("/(app)/homepage");
 
       const uid = userCredential.user.uid;
+      let fotoURL = null;
+
+      if (foto) {
+        fotoURL = await fotoPerfilUrl(foto);
+      }
 
       await firestore().collection("usuarios").doc(uid).set({
         nome,
@@ -49,14 +70,43 @@ export default function TelaRegistro() {
         nomeNegocio,
         area,
         email,
+        foto: fotoURL,
         createdAt: firestore.FieldValue.serverTimestamp(),
       });
 
       alert("Conta criada com sucesso!");
+
+      router.push("/(app)/homepage");
     } catch (error) {
       alert(error.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setFoto(result.assets[0].uri);
+    }
+  };
+
+  const handleFoto = async () => {
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setFoto(result.assets[0].uri);
     }
   };
 
@@ -147,6 +197,13 @@ export default function TelaRegistro() {
         onChangeText={setArea}
         autoCapitalize="words"
       />
+      <TouchableOpacity style={styles.button} onPress={pickImage}>
+        <Text style={styles.buttonText}>Selecionar Foto</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button} onPress={handleFoto}>
+        <Text style={styles.buttonText}>Tirar Foto</Text>
+      </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.button}
@@ -202,7 +259,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 5,
-    marginTop: 5,
+    marginBottom: 10,
   },
   buttonText: {
     fontFamily: "System",

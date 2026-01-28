@@ -1,6 +1,7 @@
 import { Stack, useRouter, useSegments } from "expo-router";
 import { useEffect, useState } from "react";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
+import { AuthContext } from "./context/AuthContext";
 
 export default function RootLayout() {
   const [initializing, setInitializing] = useState(true);
@@ -8,6 +9,8 @@ export default function RootLayout() {
 
   const router = useRouter();
   const segments = useSegments();
+
+  const uid = user?.uid ?? null;
 
   useEffect(() => {
     const unsub = auth().onAuthStateChanged((u) => {
@@ -31,5 +34,12 @@ export default function RootLayout() {
     }
   }, [user, initializing]);
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  // uid === null  → não logado
+  // uid !== null  → usuário logado e identificado
+
+  return (
+    <AuthContext.Provider value={user}>
+      <Stack screenOptions={{ headerShown: false }} />
+    </AuthContext.Provider>
+  );
 }
