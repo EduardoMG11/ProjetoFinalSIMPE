@@ -4,6 +4,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { useState } from "react";
 import auth from "@react-native-firebase/auth";
@@ -111,7 +112,10 @@ export default function TelaRegistro() {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      keyboardShouldPersistTaps="handled"
+    >
       <Text style={styles.text1}>
         Crie sua conta e conecte seu negócio a novas oportunidades.
       </Text>
@@ -197,34 +201,37 @@ export default function TelaRegistro() {
         onChangeText={setArea}
         autoCapitalize="words"
       />
-      <TouchableOpacity style={styles.button} onPress={pickImage}>
-        <Text style={styles.buttonText}>Selecionar Foto</Text>
-      </TouchableOpacity>
+      <View style={styles.viewButtons}>
+        <TouchableOpacity style={styles.button} onPress={pickImage}>
+          <Text style={styles.buttonText}>Selecionar Foto</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={handleFoto}>
-        <Text style={styles.buttonText}>Tirar Foto</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleFoto}>
+          <Text style={styles.buttonText}>Tirar Foto</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={handleRegister}
-        disabled={loading}
-      >
-        <Text style={styles.buttonText}>
-          {loading ? "Criando conta..." : "Entrar"}
-        </Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleRegister}
+          disabled={loading}
+        >
+          <Text style={styles.buttonText}>
+            {loading ? "Criando conta..." : "Entrar"}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: "#F4F7FB",
-    justifyContent: "space-between",
-    paddingVertical: 80,
-    paddingHorizontal: 30,
+    justifyContent: "flex-start",
+    paddingTop: 20,
+    paddingBottom: 30,
+    paddingHorizontal: 20,
   },
   text1: {
     fontSize: 20,
@@ -247,6 +254,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     backgroundColor: "#fff",
     padding: 15,
+    marginBottom: 12,
   },
   button: {
     backgroundColor: "#fff",
@@ -265,5 +273,11 @@ const styles = StyleSheet.create({
     fontFamily: "System",
     fontSize: 16,
     color: "#6b6b9a",
+  },
+  viewButtons: {
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    paddingTop: 10,
+    paddingBottom: 10,
   },
 });
