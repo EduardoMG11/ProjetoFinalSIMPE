@@ -46,7 +46,6 @@ export default function Perfil() {
 
   return (
     <View style={styles.container}>
-      {/*colocar setinha para voltar amanhã */}
       <Image source={{ uri: perfil.foto }} style={styles.image} />
       <View style={styles.infoContainer}>
         <Text style={styles.text}>CNPJ: {perfil.cnpj}</Text>

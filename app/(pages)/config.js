@@ -27,6 +27,14 @@ export default function Config() {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
+        onPress={() => router.push("/(auth)/editarCredenciais")}
+      >
+        <Text style={styles.textButton}>
+          Editar Credenciais (Zona de segurança)
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
         onPress={() => router.push("/(app)/telainicial")}
       >
         <Text style={styles.textButton}>Sair</Text>
