@@ -75,7 +75,11 @@ export default function TelaRegistro() {
         createdAt: firestore.FieldValue.serverTimestamp(),
       });
 
-      alert("Conta criada com sucesso!");
+      await auth().currentUser.sendEmailVerification();
+
+      alert(
+        "Conta criada com sucesso! Verifique sua caixa de entrada para verificar seu email. Se não aparecer, verifique sua caixa de spam.",
+      );
 
       router.push("/(app)/homepage");
     } catch (error) {
