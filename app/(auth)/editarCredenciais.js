@@ -23,7 +23,9 @@ export default function EditarCredenciais() {
 
   const atualizarSenha = async () => {
     try {
-      await updatePassword(auth.currentUser, novaSenha);
+      await updatePassword(user, novaSenha);
+      alert("Senha atualizada com sucesso!");
+      setNovaSenha("");
     } catch (error) {
       alert("Erro ao atualizar senha: " + error.message);
     }
