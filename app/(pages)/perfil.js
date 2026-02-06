@@ -71,6 +71,12 @@ export default function Perfil() {
       >
         <Text style={styles.textButton}>Editar Perfil</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => router.push("/(pages)/servicosPessoais")}
+      >
+        <Text style={styles.textButton}>Veja seus serviços</Text>
+      </TouchableOpacity>
     </View>
   );
 }

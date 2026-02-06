@@ -7,11 +7,7 @@ import {
   Image,
 } from "react-native";
 import { useState, useContext } from "react";
-import {
-  getAuth,
-  updatePassword,
-  updateEmail,
-} from "@react-native-firebase/auth";
+import auth from "@react-native-firebase/auth";
 import { useRouter } from "expo-router";
 import { AuthContext } from "../context/AuthContext";
 
@@ -20,6 +16,30 @@ export default function EditarCredenciais() {
   const auth = getAuth();
   const [novoEmail, setNovoEmail] = useState("");
   const [novaSenha, setNovaSenha] = useState("");
+
+  useEffect(() => {
+    async function carregarPerfil() {
+      if (!user) return;
+
+      const snap = await firestore().collection("servicos").doc(user.uid).get();
+
+      if (snap.exists) {
+        setPerfil(snap.data());
+      }
+
+      setLoading(false);
+    }
+
+    carregarPerfil();
+  }, [user]);
+
+  if (loading) {
+    return <Text>Carregando...</Text>;
+  }
+
+  if (!perfil) {
+    return <Text>Serviços não encontrados</Text>;
+  }
 
   const atualizarSenha = async () => {
     try {
