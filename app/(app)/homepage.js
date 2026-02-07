@@ -14,7 +14,6 @@ export default function TelaInicial() {
 
   return (
     <View style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.push("(pages)/perfil")}>
           <Image
@@ -33,7 +32,6 @@ export default function TelaInicial() {
 
       <Text style={styles.txtboasvindas}>Bem vindo de volta!</Text>
 
-      {/* Atalhos */}
       <View style={styles.atalhos}>
         <TouchableOpacity
           style={styles.opcao}
@@ -63,7 +61,6 @@ export default function TelaInicial() {
         </TouchableOpacity>
       </View>
 
-      {/* Conteúdo */}
       <View style={styles.funcionalidades}>
         {/* seu conteúdo continua aqui */}
       </View>
