@@ -96,6 +96,22 @@ export default function Servico() {
               )}
             />
           )}
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => router.push("/servicos/apagar/" + id)}
+            >
+              <Text style={styles.textButton}>Apagar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => router.push("/servicos/editar/" + id)}
+            >
+              <Text style={styles.textButton}>Editar</Text>
+            </TouchableOpacity>
+          </View>
         </>
       )}
     </View>
@@ -138,6 +154,14 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: "center",
   },
+  textButton: {
+    fontSize: 15,
+    textAlign: "center",
+    color: "#000",
+    fontWeight: "bold",
+    padding: 10,
+    fontFamily: "System",
+  },
 
   videoContainer: {
     width: "90%",
@@ -160,5 +184,19 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 12,
     resizeMode: "cover",
+  },
+  button: {
+    backgroundColor: "#fff",
+    paddingVertical: 15,
+    marginHorizontal: 5,
+    borderRadius: 12,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 5,
+    marginBottom: 10,
+    padding: 20,
   },
 });
