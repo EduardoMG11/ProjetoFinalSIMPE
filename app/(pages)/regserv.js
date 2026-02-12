@@ -21,6 +21,8 @@ export default function RegistrarServico() {
   const [areaServico, setAreaServico] = useState("");
   const [trocaServico, setTrocaServico] = useState("");
   const [estadoServico, setEstadoServico] = useState("");
+  const [emNegociacao, setEmNegociacao] = useState(false);
+  const [disponivel, setDisponivel] = useState(true);
 
   const user = useContext(AuthContext);
 
@@ -129,6 +131,14 @@ export default function RegistrarServico() {
         videoURL = await videoServicoUrl(video);
       }
 
+      if (fotos.length !== 3) {
+        Alert.alert(
+          "Fotos obrigatórias",
+          "O serviço deve conter exatamente 3 fotos.",
+        );
+        return;
+      }
+
       await firestore().collection("servicos").add({
         fotos: fotosURL,
         video: videoURL,
@@ -138,6 +148,8 @@ export default function RegistrarServico() {
         troca: trocaServico,
         estado: estadoServico,
         usuario: user.uid,
+        emNegociacao: emNegociacao,
+        disponivel: disponivel,
         createdAt: firestore.FieldValue.serverTimestamp(),
       });
 
@@ -150,6 +162,8 @@ export default function RegistrarServico() {
       setAreaServico("");
       setTrocaServico("");
       setEstadoServico("");
+      setEmNegociacao(false);
+      setDisponivel(true);
     } catch (error) {
       console.error("Erro ao registrar serviço:", error);
       Alert.alert("Erro", "Erro ao registrar serviço.");

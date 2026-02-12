@@ -16,7 +16,6 @@ import Carousel from "react-native-reanimated-carousel";
 
 export default function Servico() {
   const { id } = useLocalSearchParams();
-  const user = useContext(AuthContext);
 
   const [servico, setServico] = useState(null);
   const router = useRouter();
