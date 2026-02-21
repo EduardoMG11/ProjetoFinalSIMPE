@@ -19,13 +19,14 @@
       }
     },
     "android": {
+      "newArchEnabled": false,
       "package": "com.simpe.sistemaintegrado",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "googleServicesFile": "./firebase-config.json"
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
