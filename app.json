@@ -24,7 +24,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -36,6 +37,10 @@
         {
           "ios": {
             "useFrameworks": "static"
+          },
+          "android": {
+            "kotlinVersion": "1.9.24",
+            "newArchEnabled": true
           }
         }
       ],
@@ -45,8 +50,10 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "68d039db-959b-43ae-9e86-77f20216b558"
-      }
-    }
+        "projectId": "05690aec-71dc-4931-9b75-35a88369196f"
+      },
+      "router": {}
+    },
+    "owner": "morschgadelhaeduardo"
   }
 }
