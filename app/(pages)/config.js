@@ -35,7 +35,7 @@ export default function Config() {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => router.push("/(app)/telainicial")}
+        onPress={() => router.replace("/(app)/telainicial")}
       >
         <Text style={styles.textButton}>Sair</Text>
       </TouchableOpacity>

@@ -38,7 +38,7 @@ export default function ApagarServico() {
     try {
       if (servico?.nome === nome) {
         await firestore().collection("servicos").doc(id).delete();
-        router.push("(pages)/perfil");
+        router.replace("(app)/telainicial");
         Alert.alert("Serviço apagado com sucesso!");
       }
     } catch (error) {

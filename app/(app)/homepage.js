@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  ActivityIndicator,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { useRouter } from "expo-router";
 
 export default function TelaInicial() {
@@ -33,32 +26,58 @@ export default function TelaInicial() {
       <Text style={styles.txtboasvindas}>Bem vindo de volta!</Text>
 
       <View style={styles.atalhos}>
-        <TouchableOpacity
-          style={styles.opcao}
-          onPress={() => router.push("(pages)/regserv")}
+        <View
+          style={{
+            flex: 1,
+          }}
         >
-          <Image
-            source={require("../../assets/servico.png")}
-            style={{ width: 30, height: 30 }}
-          />
-          <Text style={styles.txtopcao}>Registrar Serviço</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.opcao}
+            onPress={() => router.push("(pages)/regserv")}
+          >
+            <Image
+              source={require("../../assets/servico.png")}
+              style={{ width: 30, height: 30 }}
+            />
+            <Text style={styles.txtopcao}>Registrar Serviço</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.opcao}>
-          <Image
-            source={require("../../assets/pesquisa.png")}
-            style={{ width: 40, height: 40 }}
-          />
-          <Text style={styles.txtopcao}>Pesquisa de serviços/empresas</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.opcao}
+            onPress={() => router.push("(pages)/procuraServicos")}
+          >
+            <Image
+              source={require("../../assets/pesquisa.png")}
+              style={{ width: 40, height: 40 }}
+            />
+            <Text style={styles.txtopcao}>Pesquisa de serviços</Text>
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            marginLeft: 15,
+          }}
+        >
+          <TouchableOpacity style={styles.opcao}>
+            <Image
+              source={require("../../assets/empresa.png")}
+              style={{ width: 35, height: 35 }}
+            />
+            <Text style={styles.txtopcao}>Empresas interessadas</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.opcao}>
-          <Image
-            source={require("../../assets/empresa.png")}
-            style={{ width: 35, height: 35 }}
-          />
-          <Text style={styles.txtopcao}>Empresas interessadas</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.opcao}
+            onPress={() => router.push("(pages)/procuraEmpresa")}
+          >
+            <Image
+              source={require("../../assets/procurarEmpresa.png")}
+              style={{ width: 35, height: 35 }}
+            />
+            <Text style={styles.txtopcao}>Pesquisa de empresas</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       <View style={styles.funcionalidades}>
@@ -72,8 +91,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#eeeeee",
-    paddingVertical: 80,
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
+    paddingTop: 60,
   },
 
   txtboasvindas: {
@@ -90,19 +109,19 @@ const styles = StyleSheet.create({
   atalhos: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 30,
+    marginTop: 20,
   },
 
   opcao: {
-    width: "30%",
+    width: "100%",
     aspectRatio: 1,
     backgroundColor: "#ffffff",
-    borderRadius: 10,
-    paddingVertical: 25,
-    paddingHorizontal: 10,
+    borderRadius: 15,
+    padding: 15,
     alignItems: "center",
     justifyContent: "center",
-    elevation: 5,
+    marginBottom: 15,
+    elevation: 4,
   },
 
   txtopcao: {

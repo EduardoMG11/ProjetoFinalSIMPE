@@ -20,6 +20,7 @@ export default function TelaRegistro() {
   const [confirmarSenha, setConfirmarSenha] = useState("");
   const [nomeNegocio, setNomeNegocio] = useState("");
   const [endereco, setEndereco] = useState("");
+  const [estado, setEstado] = useState("");
   const [telefone, setTelefone] = useState("");
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
@@ -41,12 +42,19 @@ export default function TelaRegistro() {
     return await ref.getDownloadURL();
   };
 
+  const normalizar = (texto) =>
+    texto
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^\w\s]/g, "")
+      .trim();
+
   const handleRegister = async () => {
     if (senha !== confirmarSenha) {
       alert("As senhas não coincidem");
       return;
     }
-
     try {
       setLoading(true);
 
@@ -61,6 +69,9 @@ export default function TelaRegistro() {
       if (foto) {
         fotoURL = await fotoPerfilUrl(foto);
       }
+      const nomePesquisa = normalizar(nomeNegocio);
+      const areaPesquisa = normalizar(area);
+      const estadoPesquisa = normalizar(estado);
 
       await firestore().collection("usuarios").doc(uid).set({
         nome,
@@ -68,10 +79,33 @@ export default function TelaRegistro() {
         cnpj,
         telefone,
         endereco,
+        estado,
         nomeNegocio,
         area,
         email,
         foto: fotoURL,
+        interessadoServico: [],
+        interessadoEmpresa: [],
+        nomePesquisa,
+        areaPesquisa,
+        estadoPesquisa,
+        createdAt: firestore.FieldValue.serverTimestamp(),
+      });
+      await firestore().collection("usuariosPublico").doc(uid).set({
+        nome,
+        sobrenome,
+        telefone,
+        endereco,
+        estado,
+        nomeNegocio,
+        area,
+        email,
+        foto: fotoURL,
+        interessadoServico: [],
+        interessadoEmpresa: [],
+        nomePesquisa,
+        areaPesquisa,
+        estadoPesquisa,
         createdAt: firestore.FieldValue.serverTimestamp(),
       });
 
@@ -171,6 +205,13 @@ export default function TelaRegistro() {
         placeholder="Endereço"
         value={endereco}
         onChangeText={setEndereco}
+        autoCapitalize="words"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Estado"
+        value={estado}
+        onChangeText={setEstado}
         autoCapitalize="words"
       />
 

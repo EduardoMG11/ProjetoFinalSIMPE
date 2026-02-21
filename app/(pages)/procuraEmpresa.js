@@ -12,8 +12,8 @@ import firestore from "@react-native-firebase/firestore";
 import { useRouter } from "expo-router";
 import { AuthContext } from "../context/AuthContext";
 
-export default function ProcuraServicos() {
-  const [servicos, setServicos] = useState([]);
+export default function ProcuraEmpresas() {
+  const [empresa, setEmpresa] = useState([]);
   const [filtro, setFiltro] = useState("");
   const [pesquisa, setPesquisa] = useState("");
   const user = useContext(AuthContext);
@@ -31,20 +31,23 @@ export default function ProcuraServicos() {
   }, [pesquisa, filtro]);
 
   async function carregarServicos() {
-    const servico = await firestore().collection("servicos").limit(100).get();
+    const empresa = await firestore()
+      .collection("usuariosPublico")
+      .where(firestore.FieldPath.documentId(), "!=", user.uid)
+      .limit(100)
+      .get();
 
-    const retirarUsuario = servico.docs
-      .map((doc) => ({
+    setEmpresa(
+      empresa.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
-      }))
-      .filter((servico) => servico.usuario !== user.uid);
-    setServicos(retirarUsuario);
+      })),
+    );
   }
 
   async function buscarPorNome() {
     const buscaNome = await firestore()
-      .collection("servicos")
+      .collection("usuariosPublico")
       .orderBy("nomePesquisa")
       .startAt(pesquisa)
       .endAt(pesquisa + "\uf8ff")
@@ -55,13 +58,13 @@ export default function ProcuraServicos() {
         id: doc.id,
         ...doc.data(),
       }))
-      .filter((servico) => servico.usuario !== user.uid);
-    setServicos(retirarUsuario);
+      .filter((doc) => user.uid !== doc.id);
+    setEmpresa(retirarUsuario);
   }
 
   async function buscarPorArea() {
     const buscaArea = await firestore()
-      .collection("servicos")
+      .collection("usuariosPublico")
       .orderBy("areaPesquisa")
       .startAt(pesquisa)
       .endAt(pesquisa + "\uf8ff")
@@ -72,12 +75,12 @@ export default function ProcuraServicos() {
         id: doc.id,
         ...doc.data(),
       }))
-      .filter((servico) => servico.usuario !== user.uid);
-    setServicos(retirarUsuario);
+      .filter((doc) => user.uid !== doc.id);
+    setEmpresa(retirarUsuario);
   }
   async function buscarPorEstado() {
     const buscaEstado = await firestore()
-      .collection("servicos")
+      .collection("usuariosPublico")
       .orderBy("estadoPesquisa")
       .startAt(pesquisa)
       .endAt(pesquisa + "\uf8ff")
@@ -88,14 +91,12 @@ export default function ProcuraServicos() {
         id: doc.id,
         ...doc.data(),
       }))
-      .filter((servico) => servico.usuario !== user.uid);
-
-    setServicos(retirarUsuario);
+      .filter((doc) => user.uid !== doc.id);
+    setEmpresa(retirarUsuario);
   }
-
   return (
     <View style={styles.container}>
-      <Text style={styles.text1}>Procure por serviços para sua empresa</Text>
+      <Text style={styles.text1}>Procure por empresas para conectar</Text>
       <View style={styles.filtroContainer}>
         <Text style={styles.filtro}>Pesquise por:</Text>
         <Pressable
@@ -136,23 +137,23 @@ export default function ProcuraServicos() {
       </View>
       <View>
         <TextInput
-          placeholder="Digite aqui para pesquisar serviços para sua empresa"
+          placeholder="Digite aqui para encontrar empresas para conectar"
           value={pesquisa}
           onChangeText={(text) => setPesquisa(text.toLowerCase())}
           style={styles.input}
         />
         <View>
           <FlatList
-            data={servicos}
+            data={empresa}
             keyExtractor={(item) => item.id}
             contentContainerStyle={styles.listContent}
             renderItem={({ item }) => (
               <TouchableOpacity
                 style={styles.infoContainer}
-                onPress={() => router.push(`/othersServico/${item.id}`)}
+                onPress={() => router.push(`/empresas/${item.id}`)}
               >
                 <View style={styles.item}>
-                  <Text style={styles.itemText}>{item.nome}</Text>
+                  <Text style={styles.itemText}>{item.nomeNegocio}</Text>
                   <Text style={styles.descricao}>
                     Área: {item.areaPesquisa}
                   </Text>
@@ -174,7 +175,6 @@ export default function ProcuraServicos() {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

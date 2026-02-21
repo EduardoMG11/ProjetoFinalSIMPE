@@ -8,52 +8,33 @@ import {
 } from "react-native";
 import { useState, useContext } from "react";
 import auth from "@react-native-firebase/auth";
-import { useRouter } from "expo-router";
 import { AuthContext } from "../context/AuthContext";
+import { useRouter } from "expo-router";
 
 export default function EditarCredenciais() {
   const user = useContext(AuthContext);
-  const auth = getAuth();
+  const router = useRouter();
   const [novoEmail, setNovoEmail] = useState("");
   const [novaSenha, setNovaSenha] = useState("");
 
-  useEffect(() => {
-    async function carregarPerfil() {
-      if (!user) return;
-
-      const snap = await firestore().collection("servicos").doc(user.uid).get();
-
-      if (snap.exists) {
-        setPerfil(snap.data());
-      }
-
-      setLoading(false);
-    }
-
-    carregarPerfil();
-  }, [user]);
-
-  if (loading) {
-    return <Text>Carregando...</Text>;
-  }
-
-  if (!perfil) {
-    return <Text>Serviços não encontrados</Text>;
-  }
-
   const atualizarSenha = async () => {
     try {
-      await updatePassword(user, novaSenha);
+      await auth().currentUser.updatePassword(novaSenha);
       alert("Senha atualizada com sucesso!");
       setNovaSenha("");
     } catch (error) {
       alert("Erro ao atualizar senha: " + error.message);
+      if (error.code === "auth/requires-recent-login") {
+        alert("Faça login novamente para continuar.");
+        await auth().signOut();
+        router.replace("/login");
+      }
     }
   };
 
   const atualizarEmail = async () => {
     try {
-      await updateEmail(auth.currentUser, novoEmail);
+      await auth().currentUser.updateEmail(novoEmail);
 
       alert("Email atualizado com sucesso!");
     } catch (error) {

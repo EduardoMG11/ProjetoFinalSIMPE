@@ -26,6 +26,14 @@ export default function RegistrarServico() {
 
   const user = useContext(AuthContext);
 
+  const normalizar = (texto) =>
+    texto
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^\w\s]/g, "")
+      .trim();
+
   const adicionarFoto = (uri) => {
     setFotos((prev) => [...prev, uri].slice(0, 3));
   };
@@ -139,6 +147,17 @@ export default function RegistrarServico() {
         return;
       }
 
+      const nomePesquisa = normalizar(nomeServico);
+      const areaPesquisa = normalizar(areaServico);
+      const estadoPesquisa = normalizar(estadoServico);
+
+      const dadosUsuario = await firestore()
+        .collection("usuarios")
+        .doc(user.uid)
+        .get();
+
+      const { nomeNegocio } = dadosUsuario.data();
+
       await firestore().collection("servicos").add({
         fotos: fotosURL,
         video: videoURL,
@@ -148,8 +167,12 @@ export default function RegistrarServico() {
         troca: trocaServico,
         estado: estadoServico,
         usuario: user.uid,
-        emNegociacao: emNegociacao,
-        disponivel: disponivel,
+        nomeNegocio,
+        emNegociacao,
+        disponivel,
+        nomePesquisa,
+        areaPesquisa,
+        estadoPesquisa,
         createdAt: firestore.FieldValue.serverTimestamp(),
       });
 
