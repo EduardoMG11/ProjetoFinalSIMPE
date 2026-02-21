@@ -2,7 +2,7 @@
   "expo": {
     "name": "SistemaIntegrado",
     "slug": "sistemaintegrado",
-    "newArchEnabled": false,
+    "newArchEnabled": true,
     "plugins": [
       "expo-router",
       [
@@ -24,7 +24,7 @@
       }
     },
     "android": {
-      "newArchEnabled": false,
+      "newArchEnabled": true,
       "package": "com.simpe.sistemaintegrado",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
