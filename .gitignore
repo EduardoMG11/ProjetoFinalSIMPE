@@ -40,7 +40,6 @@ ios/
 android/
 
 # Firebase / Google
-google-services.json
 GoogleService-Info.plist
 
 *.zips
