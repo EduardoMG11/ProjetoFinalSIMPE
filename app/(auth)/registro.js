@@ -300,6 +300,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 15,
     marginBottom: 12,
+    placeholderTextColor: "#666666",
   },
   button: {
     backgroundColor: "#fff",

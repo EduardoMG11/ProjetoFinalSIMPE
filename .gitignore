@@ -41,5 +41,6 @@ android/
 
 # Firebase / Google
 GoogleService-Info.plist
+google-services.json
 
 *.zips

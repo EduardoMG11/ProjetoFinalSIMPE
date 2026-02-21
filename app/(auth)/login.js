@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     backgroundColor: "#fff",
     padding: 15,
+    placeholderTextColor: "#666666",
   },
   button: {
     backgroundColor: "#fff",

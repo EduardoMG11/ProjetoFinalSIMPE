@@ -219,6 +219,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 16,
     backgroundColor: "#fff",
+    placeholderTextColor: "#666666",
   },
 
   infoContainer: {
