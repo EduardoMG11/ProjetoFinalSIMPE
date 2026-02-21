@@ -37,7 +37,6 @@ yarn-error.*
 
 # generated native folders (Expo managed)
 ios/
-android/
 
 # Firebase / Google
 GoogleService-Info.plist
