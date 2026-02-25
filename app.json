@@ -2,6 +2,7 @@
   "expo": {
     "name": "SistemaIntegrado",
     "slug": "sistemaintegrado",
+    "scheme": "simpe",
     "newArchEnabled": true,
     "plugins": [
       "expo-router",

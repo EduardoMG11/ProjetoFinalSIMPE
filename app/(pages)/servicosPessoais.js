@@ -4,6 +4,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
+  ScrollView,
 } from "react-native";
 import { useState, useEffect, useContext } from "react";
 import firestore from "@react-native-firebase/firestore";
@@ -47,7 +48,7 @@ export default function ServicosPessoais() {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.text1}>Seus serviços</Text>
       <View style={styles.infoContainer}>
         <FlatList
@@ -65,7 +66,7 @@ export default function ServicosPessoais() {
           )}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

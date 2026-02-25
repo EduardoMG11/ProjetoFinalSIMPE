@@ -162,6 +162,9 @@ export default function ProcuraServicos() {
                   <Text style={styles.descricao}>
                     Empresa: {item.nomeNegocio}
                   </Text>
+                  <Text style={styles.descricao}>
+                    Disponível: {item.disponivel ? "Sim" : "Não"}
+                  </Text>
                 </View>
               </TouchableOpacity>
             )}

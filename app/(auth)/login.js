@@ -30,7 +30,7 @@ export default function TelaLogIn() {
       } else if (err === "auth/user-not-found") {
         alert("Usuário não encontrado");
       } else {
-        alert("Erro desconhecido");
+        alert("Erro ao entrar");
         console.log(error);
       }
     } finally {

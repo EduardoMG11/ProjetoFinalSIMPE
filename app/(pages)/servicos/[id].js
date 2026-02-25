@@ -38,7 +38,7 @@ export default function Servico() {
   }, [id]);
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       {servico && (
         <>
           <Text style={styles.title}>{servico.nome}</Text>
@@ -113,7 +113,7 @@ export default function Servico() {
           </View>
         </>
       )}
-    </View>
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({
