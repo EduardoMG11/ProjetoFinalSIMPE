@@ -23,6 +23,7 @@ export default function RegistrarServico() {
   const [estadoServico, setEstadoServico] = useState("");
   const [emNegociacao, setEmNegociacao] = useState(false);
   const [disponivel, setDisponivel] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const user = useContext(AuthContext);
 
@@ -124,6 +125,7 @@ export default function RegistrarServico() {
   };
 
   const handleRegisterServico = async () => {
+    setLoading(true);
     try {
       if (!user || !user.uid) {
         Alert.alert("Erro", "Usuário não autenticado.");
@@ -190,6 +192,8 @@ export default function RegistrarServico() {
     } catch (error) {
       console.error("Erro ao registrar serviço:", error);
       Alert.alert("Erro", "Erro ao registrar serviço.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -244,13 +248,19 @@ export default function RegistrarServico() {
           Escolher fotos do serviço ({fotos.length}/3)
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={escolherFonteVideo} style={styles.button}>
+      <TouchableOpacity
+        onPress={escolherFonteVideo}
+        style={styles.button}
+        disabled={loading}
+      >
         <Text style={styles.txtbutton}>
           {video ? "Vídeo Selecionado" : "Escolher vídeo do serviço (1)"}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={handleRegisterServico} style={styles.button}>
-        <Text style={styles.txtbutton}>Registrar serviço</Text>
+        <Text style={styles.txtbutton}>
+          {loading ? "Carregando..." : "Registrar serviço"}
+        </Text>
       </TouchableOpacity>
     </ScrollView>
   );

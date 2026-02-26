@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Alert,
 } from "react-native";
 import { useState, useEffect, useContext } from "react";
 import auth from "@react-native-firebase/auth";
@@ -21,24 +22,30 @@ export default function EditarPerfil() {
   const [perfil, setPerfil] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const escolherFonteFoto = () => {
+    Alert.alert("Adicionar foto", "Escolha a origem", [
+      { text: "Câmera", onPress: handleFoto },
+      { text: "Galeria", onPress: pickImage },
+      { text: "Cancelar", style: "cancel" },
+    ]);
+  };
+  const fotoPerfilUrl = async (uri) => {
+    {
+      /* Transformar a foto de perfil em url */
+    }
+    const user = auth().currentUser;
+    if (!user) throw new Error("Usuário não autenticado");
+
+    const ref = storage().ref(`users/${user.uid}/profile.jpg`);
+
+    const response = await fetch(uri);
+    const blob = await response.blob();
+
+    await ref.put(blob);
+
+    return await ref.getDownloadURL();
+  };
   useEffect(() => {
-    const fotoPerfilUrl = async (uri) => {
-      {
-        /* Transformar a foto de perfil em url */
-      }
-      const user = auth().currentUser;
-      if (!user) throw new Error("Usuário não autenticado");
-
-      const ref = storage().ref(`users/${user.uid}/profile.jpg`);
-
-      const response = await fetch(uri);
-      const blob = await response.blob();
-
-      await ref.put(blob);
-
-      return await ref.getDownloadURL();
-    };
-
     async function carregarPerfil() {
       {
         /* Carregar perfil  */
@@ -66,12 +73,29 @@ export default function EditarPerfil() {
   }
 
   const updateUser = async () => {
+    setLoading(true);
+
     try {
-      await firestore().collection("usuarios").doc(user.uid).update(perfil);
-      alert("Perfil atualizado com sucesso!");
+      let fotoUrl = perfil.foto;
+
+      if (perfil.foto?.startsWith("file://")) {
+        fotoUrl = await fotoPerfilUrl(perfil.foto);
+      }
+
+      await firestore()
+        .collection("usuarios")
+        .doc(user.uid)
+        .update({
+          ...perfil,
+          foto: fotoUrl,
+        });
     } catch (error) {
       console.error(error);
     }
+
+    setLoading(false);
+    alert("Perfil atualizado com sucesso!");
+    router.replace("(app)/homepage");
   };
   const pickImage = async () => {
     {
@@ -152,16 +176,14 @@ export default function EditarPerfil() {
         placeholder="Nome do negócio"
       />
 
-      <TouchableOpacity style={styles.button} onPress={pickImage}>
-        <Text style={styles.buttonText}>Selecionar nova foto</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={handleFoto}>
-        <Text style={styles.buttonText}>Tirar nova foto</Text>
+      <TouchableOpacity style={styles.button} onPress={escolherFonteFoto}>
+        <Text style={styles.buttonText}>Adicionar nova foto</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={updateUser}>
-        <Text style={styles.buttonText}>Atualizar</Text>
+        <Text style={styles.buttonText}>
+          {loading ? "Atualizando..." : "Atualizar"}
+        </Text>
       </TouchableOpacity>
     </View>
   );

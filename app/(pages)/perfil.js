@@ -2,7 +2,7 @@ import {
   Text,
   View,
   StyleSheet,
-  TextInput,
+  ScrollView,
   TouchableOpacity,
   Image,
 } from "react-native";
@@ -45,7 +45,7 @@ export default function Perfil() {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Image source={{ uri: perfil.foto }} style={styles.image} />
       <View style={styles.infoContainer}>
         <Text style={styles.text}>CNPJ: {perfil.cnpj}</Text>
@@ -77,13 +77,13 @@ export default function Perfil() {
       >
         <Text style={styles.textButton}>Veja seus serviços</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     alignItems: "center",
     justifyContent: "center",
   },

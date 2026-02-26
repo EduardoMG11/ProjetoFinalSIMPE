@@ -16,11 +16,14 @@ export default function EditarCredenciais() {
   const router = useRouter();
   const [novoEmail, setNovoEmail] = useState("");
   const [novaSenha, setNovaSenha] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const atualizarSenha = async () => {
+    setLoading(true);
     try {
       await auth().currentUser.updatePassword(novaSenha);
       alert("Senha atualizada com sucesso!");
+      setLoading(false);
       setNovaSenha("");
     } catch (error) {
       alert("Erro ao atualizar senha: " + error.message);
@@ -33,9 +36,10 @@ export default function EditarCredenciais() {
   };
 
   const atualizarEmail = async () => {
+    setLoading(true);
     try {
       await auth().currentUser.updateEmail(novoEmail);
-
+      setLoading(false);
       alert("Email atualizado com sucesso!");
     } catch (error) {
       alert("Erro ao atualizar email: " + error.message);

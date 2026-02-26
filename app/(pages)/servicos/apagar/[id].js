@@ -17,6 +17,7 @@ export default function ApagarServico() {
 
   const [servico, setServico] = useState(null);
   const [nome, setNome] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function carregarServico() {
@@ -35,14 +36,17 @@ export default function ApagarServico() {
   }, [id]);
 
   async function apagarServico() {
+    setLoading(true);
     try {
       if (servico?.nome === nome) {
         await firestore().collection("servicos").doc(id).delete();
-        router.replace("(app)/telainicial");
+        router.replace("/");
         Alert.alert("Serviço apagado com sucesso!");
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   }
 

@@ -48,7 +48,7 @@ export default function ServicosPessoais() {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       <Text style={styles.text1}>Seus serviços</Text>
       <View style={styles.infoContainer}>
         <FlatList
@@ -66,7 +66,7 @@ export default function ServicosPessoais() {
           )}
         />
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
