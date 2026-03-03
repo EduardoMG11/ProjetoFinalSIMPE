@@ -12,15 +12,35 @@ import firestore from "@react-native-firebase/firestore";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import Video from "react-native-video";
 import Carousel from "react-native-reanimated-carousel";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function OutroServico() {
   const { id } = useLocalSearchParams();
-
+  const user = useContext(AuthContext);
   const [servico, setServico] = useState(null);
+  const [perfil, setPerfil] = useState(null);
+  const router = useRouter();
 
   const { width } = Dimensions.get("window");
 
   useEffect(() => {
+    if (!user) {
+      return;
+    }
+    const carregarUsuario = async () => {
+      try {
+        const usuario = await firestore()
+          .collection("usuariosPublico")
+          .doc(user.uid)
+          .get();
+        if (usuario.exists) {
+          setPerfil(usuario.data());
+        }
+      } catch (error) {
+        console.error("Erro ao buscar perfil:", error);
+      }
+    };
+    carregarUsuario();
     const listarServico = async () => {
       try {
         const serv = firestore().collection("servicos").doc(id);
@@ -33,7 +53,45 @@ export default function OutroServico() {
       }
     };
     listarServico();
-  }, [id]);
+  }, [id, user]);
+
+  const demonstrarInteresse = async () => {
+    try {
+      if (!perfil) {
+        throw new Error("Perfil não encontrado");
+      }
+      if (!user) {
+        throw new Error("Usuário não autenticado");
+      }
+      if (
+        perfil.interessadoEmpresa.length >= 15 ||
+        perfil.interessadoServico.length >= 15
+      ) {
+        throw new Error(
+          "Limite de interesses atingido, remova algum para demonstrar interesse",
+        );
+      }
+      await firestore()
+        .collection("usuariosPublico")
+        .doc(user.uid)
+        .update({
+          interessadoServico: firestore.FieldValue.arrayUnion(id),
+        });
+      await firestore()
+        .collection("usuariosPublico")
+        .doc(user.uid)
+        .update({
+          interessadoEmpresa: firestore.FieldValue.arrayUnion(servico.usuario),
+        });
+      setPerfil((prev) => ({
+        ...prev,
+        interessadoEmpresa: [...prev.interessadoEmpresa, servico.usuario],
+        interessadoServico: [...prev.interessadoServico, id],
+      }));
+    } catch (error) {
+      console.error("Erro ao demonstrar interesse:", error);
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -96,6 +154,9 @@ export default function OutroServico() {
               )}
             />
           )}
+          <TouchableOpacity style={styles.button} onPress={demonstrarInteresse}>
+            <Text>Demonstrar interesse neste serviço</Text>
+          </TouchableOpacity>
         </>
       )}
     </ScrollView>

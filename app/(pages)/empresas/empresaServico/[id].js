@@ -9,14 +9,35 @@ import {
 import { useState, useEffect } from "react";
 import firestore from "@react-native-firebase/firestore";
 import { useRouter, useLocalSearchParams } from "expo-router";
+import { AuthContext } from "../../../context/AuthContext";
 
 export default function EmpresaServico() {
   const { id } = useLocalSearchParams();
+  const user = useContext(AuthContext);
   const router = useRouter();
   const [servicos, setServicos] = useState([]);
   const [empresa, setEmpresa] = useState(null);
+  const [perfil, setPerfil] = useState(null);
 
   useEffect(() => {
+    if (!user) {
+      return;
+    }
+    const carregarUsuario = async () => {
+      try {
+        const usuario = await firestore()
+          .collection("usuariosPublico")
+          .doc(user.uid)
+          .get();
+        if (usuario.exists) {
+          setPerfil(usuario.data());
+        }
+      } catch (error) {
+        console.error("Erro ao buscar perfil:", error);
+      }
+    };
+    carregarUsuario();
+
     async function carregarServicos() {
       const snap = await firestore()
         .collection("servicos")
@@ -43,7 +64,42 @@ export default function EmpresaServico() {
       setEmpresa(empresa);
     }
     carregarEmpresa();
-  }, [id]);
+  }, [id, user]);
+  const demonstrarInteresse = async () => {
+    try {
+      if (!perfil) {
+        throw new Error("Perfil não encontrado");
+      }
+      if (!user) {
+        throw new Error("Usuário não autenticado");
+      }
+      if (perfil.interessadoEmpresa?.includes(id)) {
+        console.log("Usuário já demonstrou interesse");
+        return;
+      }
+      if (
+        perfil.interessadoEmpresa.length >= 15 ||
+        perfil.interessadoServico.length >= 15
+      ) {
+        throw new Error(
+          "Limite de interesses atingido, remova algum para demonstrar interesse",
+        );
+      }
+      await firestore()
+        .collection("usuariosPublico")
+        .doc(user.uid)
+        .update({
+          interessadoEmpresa: firestore.FieldValue.arrayUnion(id),
+        });
+      setPerfil((prev) => ({
+        ...prev,
+        interessadoEmpresa: [...prev.interessadoEmpresa, id],
+      }));
+      Alert.alert("Interesse demonstrado com sucesso!");
+    } catch (error) {
+      console.error("Erro ao demonstrar interesse:", error);
+    }
+  };
 
   return (
     <FlatList
@@ -77,6 +133,11 @@ export default function EmpresaServico() {
       )}
       ListFooterComponent={
         <View>
+          <TouchableOpacity onPress={demonstrarInteresse} style={styles.button}>
+            <Text style={styles.textButton}>
+              Demonstre interesse pela empresa
+            </Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.button}>
             <Text style={styles.textButton}>
               Entre em contato com a empresa

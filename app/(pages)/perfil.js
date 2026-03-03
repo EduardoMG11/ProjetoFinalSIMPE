@@ -7,12 +7,9 @@ import {
   Image,
 } from "react-native";
 import { useState, useEffect, useContext } from "react";
-import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
-import storage from "@react-native-firebase/storage";
 import { useRouter } from "expo-router";
 import { AuthContext } from "../context/AuthContext";
-import { doc, getDoc } from "@react-native-firebase/firestore";
 
 export default function Perfil() {
   const user = useContext(AuthContext);

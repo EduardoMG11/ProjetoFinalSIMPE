@@ -64,7 +64,7 @@ export default function TelaInicial() {
               source={require("../../assets/empresa.png")}
               style={{ width: 35, height: 35 }}
             />
-            <Text style={styles.txtopcao}>Empresas interessadas</Text>
+            <Text style={styles.txtopcao}>Empresas interessadas em você</Text>
           </TouchableOpacity>
 
           <TouchableOpacity

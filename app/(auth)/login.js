@@ -1,6 +1,6 @@
 import {
   Text,
-  View,
+  KeyboardAvoidingView,
   StyleSheet,
   TextInput,
   TouchableOpacity,
@@ -39,7 +39,7 @@ export default function TelaLogIn() {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <Text style={styles.text1}>
         Bem-vindo de volta. Faça login para continuar.
       </Text>
@@ -70,7 +70,7 @@ export default function TelaLogIn() {
           {loading ? "Entrando..." : "Entrar"}
         </Text>
       </TouchableOpacity>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

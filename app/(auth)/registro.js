@@ -5,6 +5,8 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  KeyboardAvoidingView,
+  Alert,
 } from "react-native";
 import { useState } from "react";
 import auth from "@react-native-firebase/auth";
@@ -27,6 +29,14 @@ export default function TelaRegistro() {
   const [area, setArea] = useState("");
   const [foto, setFoto] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const escolherFonteFoto = () => {
+    Alert.alert("Adicionar foto", "Escolha a origem", [
+      { text: "Câmera", onPress: handleFoto },
+      { text: "Galeria", onPress: pickImage },
+      { text: "Cancelar", style: "cancel" },
+    ]);
+  };
 
   const fotoPerfilUrl = async (uri) => {
     const user = auth().currentUser;
@@ -75,17 +85,12 @@ export default function TelaRegistro() {
 
       await firestore().collection("usuarios").doc(uid).set({
         nome,
-        sobrenome,
-        cnpj,
-        telefone,
         endereco,
         estado,
         nomeNegocio,
         area,
         email,
         foto: fotoURL,
-        interessadoServico: [],
-        interessadoEmpresa: [],
         nomePesquisa,
         areaPesquisa,
         estadoPesquisa,
@@ -93,8 +98,6 @@ export default function TelaRegistro() {
       });
       await firestore().collection("usuariosPublico").doc(uid).set({
         nome,
-        sobrenome,
-        telefone,
         endereco,
         estado,
         nomeNegocio,
@@ -150,122 +153,91 @@ export default function TelaRegistro() {
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.container}
-      keyboardShouldPersistTaps="handled"
-    >
-      <Text style={styles.text1}>
-        Crie sua conta e conecte seu negócio a novas oportunidades.
-      </Text>
+    <KeyboardAvoidingView>
+      <ScrollView
+        contentContainerStyle={styles.container}
+        keyboardShouldPersistTaps="handled"
+      >
+        <Text style={styles.text1}>
+          Crie sua conta e conecte seu negócio a novas oportunidades.
+        </Text>
+        <TextInput
+          style={styles.input}
+          placeholder="E-mail"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
 
-      <TextInput
-        style={styles.input}
-        placeholder="CNPJ"
-        value={cnpj}
-        onChangeText={setCnpj}
-        keyboardType="default"
-        autoCapitalize="none"
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="Senha"
+          value={senha}
+          onChangeText={setSenha}
+          secureTextEntry
+        />
 
-      <TextInput
-        style={styles.input}
-        placeholder="E-mail"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="Confirme sua senha"
+          value={confirmarSenha}
+          onChangeText={setConfirmarSenha}
+          secureTextEntry
+        />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Senha"
-        value={senha}
-        onChangeText={setSenha}
-        secureTextEntry
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="Nome do negócio"
+          value={nomeNegocio}
+          onChangeText={setNomeNegocio}
+          autoCapitalize="words"
+        />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Confirme sua senha"
-        value={confirmarSenha}
-        onChangeText={setConfirmarSenha}
-        secureTextEntry
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Nome do negócio"
-        value={nomeNegocio}
-        onChangeText={setNomeNegocio}
-        autoCapitalize="words"
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Endereço"
-        value={endereco}
-        onChangeText={setEndereco}
-        autoCapitalize="words"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Estado"
-        value={estado}
-        onChangeText={setEstado}
-        autoCapitalize="words"
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Telefone"
-        value={telefone}
-        onChangeText={setTelefone}
-        keyboardType="phone-pad"
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Nome"
-        value={nome}
-        onChangeText={setNome}
-        autoCapitalize="words"
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Sobrenome"
-        value={sobrenome}
-        onChangeText={setSobrenome}
-        autoCapitalize="words"
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Área de atuação"
-        value={area}
-        onChangeText={setArea}
-        autoCapitalize="words"
-      />
-      <View style={styles.viewButtons}>
-        <TouchableOpacity style={styles.button} onPress={pickImage}>
-          <Text style={styles.buttonText}>Selecionar Foto</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.button} onPress={handleFoto}>
-          <Text style={styles.buttonText}>Tirar Foto</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.button}
-          onPress={handleRegister}
-          disabled={loading}
-        >
-          <Text style={styles.buttonText}>
-            {loading ? "Criando conta..." : "Entrar"}
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+        <TextInput
+          style={styles.input}
+          placeholder="Endereço"
+          value={endereco}
+          onChangeText={setEndereco}
+          autoCapitalize="words"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Estado"
+          value={estado}
+          onChangeText={setEstado}
+          autoCapitalize="words"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Nome completo"
+          value={nome}
+          onChangeText={setNome}
+          autoCapitalize="words"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Área de atuação"
+          value={area}
+          onChangeText={setArea}
+          autoCapitalize="words"
+        />
+        <View style={styles.viewButtons}>
+          <TouchableOpacity style={styles.button} onPress={escolherFonteFoto}>
+            <Text style={styles.buttonText}>Adicione uma foto de perfil</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleRegister}
+            disabled={loading}
+          >
+            <Text style={styles.buttonText}>
+              {loading ? "Criando conta..." : "Entrar"}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
