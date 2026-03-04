@@ -21,7 +21,7 @@ export default function Empresa() {
   const [perfil, setPerfil] = useState(null);
 
   useEffect(() => {
-    if (!user) return;
+    if (!user?.uid) return;
     const listarEmpresa = async () => {
       try {
         const serv = firestore().collection("usuariosPublico").doc(id);
@@ -48,7 +48,7 @@ export default function Empresa() {
       }
     };
     carregarUsuario();
-  }, [id, user]);
+  }, [id, user?.uid]);
 
   const demonstrarInteresse = async () => {
     try {
@@ -90,29 +90,25 @@ export default function Empresa() {
     <ScrollView contentContainerStyle={styles.container}>
       {empresa && (
         <>
-          <View style={styles.container}>
-            <Image source={{ uri: empresa.foto }} style={styles.image} />
-            <View style={styles.infoContainer}>
-              <Text style={styles.text}>
-                Nome do negócio: {empresa.nomeNegocio}
-              </Text>
-            </View>
-            <View style={styles.infoContainer}>
-              <Text style={styles.text}>Área de atuação: {empresa.area}</Text>
-            </View>
-            <View style={styles.infoContainer}>
-              <Text style={styles.text}>Estado: {empresa.estado}</Text>
-            </View>
-            <View style={styles.infoContainer}>
-              <Text style={styles.text}>Endereço: {empresa.endereco}</Text>
-            </View>
-            <View style={styles.infoContainer}>
-              <Text style={styles.text}>E-mail: {empresa.email}</Text>
-            </View>
-            <View style={styles.infoContainer}>
-              <Text style={styles.text}>Telefone: {empresa.telefone}</Text>
-            </View>
+          <Image source={{ uri: empresa.foto }} style={styles.image} />
+          <View style={styles.infoContainer}>
+            <Text style={styles.text}>
+              Nome do negócio: {empresa.nomeNegocio}
+            </Text>
           </View>
+          <View style={styles.infoContainer}>
+            <Text style={styles.text}>Área de atuação: {empresa.area}</Text>
+          </View>
+          <View style={styles.infoContainer}>
+            <Text style={styles.text}>Estado: {empresa.estado}</Text>
+          </View>
+          <View style={styles.infoContainer}>
+            <Text style={styles.text}>Endereço: {empresa.endereco}</Text>
+          </View>
+          <View style={styles.infoContainer}>
+            <Text style={styles.text}>E-mail: {empresa.email}</Text>
+          </View>
+
           <TouchableOpacity
             style={styles.button}
             onPress={() => router.push(`/empresas/empresaServico/${id}`)}

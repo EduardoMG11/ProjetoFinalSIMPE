@@ -1,12 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { Text, StyleSheet, TouchableOpacity, Image, View } from "react-native";
 import { useRouter } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function TelaInicial() {
   const router = useRouter();
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.push("(pages)/perfil")}>
           <Image
@@ -22,9 +23,9 @@ export default function TelaInicial() {
           />
         </TouchableOpacity>
       </View>
-
-      <Text style={styles.txtboasvindas}>Bem vindo de volta!</Text>
-
+      <View style={styles.txtbox}>
+        <Text style={styles.txtboasvindas}>Bem vindo de volta!</Text>
+      </View>
       <View style={styles.atalhos}>
         <View
           style={{
@@ -59,12 +60,15 @@ export default function TelaInicial() {
             marginLeft: 15,
           }}
         >
-          <TouchableOpacity style={styles.opcao}>
+          <TouchableOpacity
+            style={styles.opcao}
+            onPress={() => router.push("(pages)/empresasInteressadas")}
+          >
             <Image
               source={require("../../assets/empresa.png")}
               style={{ width: 35, height: 35 }}
             />
-            <Text style={styles.txtopcao}>Empresas interessadas em você</Text>
+            <Text style={styles.txtopcao}>Empresas interessadas</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -83,7 +87,29 @@ export default function TelaInicial() {
       <View style={styles.funcionalidades}>
         {/* seu conteúdo continua aqui */}
       </View>
-    </View>
+      <View style={styles.footer}>
+        <TouchableOpacity
+          onPress={() => router.push("(pages)/plataformaEnsino.js")}
+        >
+          <Image
+            source={require("../../assets/plataformaensino.png")}
+            style={{ width: 35, height: 35 }}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Image
+            source={require("../../assets/chat.png")}
+            style={{ width: 35, height: 35 }}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("(pages)/analise.js")}>
+          <Image
+            source={require("../../assets/analise.png")}
+            style={{ width: 35, height: 35 }}
+          />
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -91,7 +117,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#eeeeee",
-    paddingHorizontal: 20,
     paddingTop: 60,
   },
 
@@ -110,6 +135,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 20,
+    paddingHorizontal: 20,
   },
 
   opcao: {
@@ -141,5 +167,24 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    paddingHorizontal: 20,
+  },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    backgroundColor: "#ffffff",
+    height: 70,
+    borderTopWidth: 1,
+    borderTopColor: "#e0e0e0",
+    elevation: 10,
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    paddingBottom: 10,
+    height: 80,
+  },
+  txtbox: {
+    paddingHorizontal: 20,
   },
 });

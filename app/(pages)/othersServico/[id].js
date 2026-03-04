@@ -6,6 +6,7 @@ import {
   Image,
   ScrollView,
   Dimensions,
+  Alert,
 } from "react-native";
 import { useState, useEffect, useContext } from "react";
 import firestore from "@react-native-firebase/firestore";
@@ -88,6 +89,7 @@ export default function OutroServico() {
         interessadoEmpresa: [...prev.interessadoEmpresa, servico.usuario],
         interessadoServico: [...prev.interessadoServico, id],
       }));
+      Alert.alert("Interesse demonstrado com sucesso");
     } catch (error) {
       console.error("Erro ao demonstrar interesse:", error);
     }
