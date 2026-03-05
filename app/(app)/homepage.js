@@ -83,13 +83,10 @@ export default function TelaInicial() {
           </TouchableOpacity>
         </View>
       </View>
-
-      <View style={styles.funcionalidades}>
-        {/* seu conteúdo continua aqui */}
-      </View>
+      <View></View>
       <View style={styles.footer}>
         <TouchableOpacity
-          onPress={() => router.push("(pages)/plataformaEnsino.js")}
+          onPress={() => router.push("(pages)/plataformaEnsino")}
         >
           <Image
             source={require("../../assets/plataformaensino.png")}
@@ -102,7 +99,7 @@ export default function TelaInicial() {
             style={{ width: 35, height: 35 }}
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => router.push("(pages)/analise.js")}>
+        <TouchableOpacity onPress={() => router.push("(pages)/analise")}>
           <Image
             source={require("../../assets/analise.png")}
             style={{ width: 35, height: 35 }}
@@ -174,15 +171,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     backgroundColor: "#ffffff",
-    height: 70,
     borderTopWidth: 1,
     borderTopColor: "#e0e0e0",
     elevation: 10,
     shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    paddingBottom: 10,
-    height: 80,
+    paddingBottom: 0,
+    height: 70,
+    marginTop: 150,
   },
   txtbox: {
     paddingHorizontal: 20,
