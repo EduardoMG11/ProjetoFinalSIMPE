@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    width: "110%",
+    width: "100%",
     maxWidth: 520,
     borderWidth: 1,
     borderColor: "#ccc",

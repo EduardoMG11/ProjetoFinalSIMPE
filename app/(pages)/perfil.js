@@ -45,16 +45,10 @@ export default function Perfil() {
     <ScrollView contentContainerStyle={styles.container}>
       <Image source={{ uri: perfil.foto }} style={styles.image} />
       <View style={styles.infoContainer}>
-        <Text style={styles.text}>CNPJ: {perfil.cnpj}</Text>
-      </View>
-      <View style={styles.infoContainer}>
         <Text style={styles.text}>Nome do negócio: {perfil.nomeNegocio}</Text>
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.text}>E-mail: {user.email}</Text>
-      </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.text}>Telefone: {perfil.telefone}</Text>
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.text}>Endereço: {perfil.endereco}</Text>

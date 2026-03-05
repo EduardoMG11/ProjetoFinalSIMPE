@@ -52,7 +52,10 @@ export default function EditarPerfil() {
       }
       if (!user) return;
 
-      const snap = await firestore().collection("usuarios").doc(user.uid).get();
+      const snap = await firestore()
+        .collection("usuariosPublico")
+        .doc(user.uid)
+        .get();
 
       if (snap.exists) {
         setPerfil(snap.data());
@@ -146,12 +149,6 @@ export default function EditarPerfil() {
         placeholder="Nome"
       />
       <TextInput
-        value={perfil.sobrenome}
-        onChangeText={(text) => setPerfil({ ...perfil, sobrenome: text })}
-        style={styles.input}
-        placeholder="Sobrenome"
-      />
-      <TextInput
         value={perfil.endereco}
         onChangeText={(text) => setPerfil({ ...perfil, endereco: text })}
         style={styles.input}
@@ -162,12 +159,6 @@ export default function EditarPerfil() {
         onChangeText={(text) => setPerfil({ ...perfil, area: text })}
         style={styles.input}
         placeholder="Área de atuação"
-      />
-      <TextInput
-        value={perfil.telefone}
-        onChangeText={(text) => setPerfil({ ...perfil, telefone: text })}
-        style={styles.input}
-        placeholder="Telefone"
       />
       <TextInput
         value={perfil.nomeNegocio}
