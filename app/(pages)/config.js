@@ -22,6 +22,18 @@ export default function Config() {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
+        onPress={() => router.push("/(pages)/interessesServico")}
+      >
+        <Text style={styles.textButton}>Serviços que você se interessou</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => router.push("/(pages)/interessesEmpresa")}
+      >
+        <Text style={styles.textButton}>Empresas que você se interessou</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
         onPress={() => router.replace("/")}
       >
         <Text style={styles.textButton}>Sair</Text>
