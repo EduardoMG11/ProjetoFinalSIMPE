@@ -4,6 +4,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { useState } from "react";
 import auth from "@react-native-firebase/auth";
@@ -15,6 +16,19 @@ export default function TelaLogIn() {
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
+
+  const forgotPassword = async () => {
+    try {
+      await auth().sendPasswordResetEmail(email);
+      Alert.alert(
+        "Successo",
+        "Um e-mail foi enviado para redefinição de senha. Caso não ache, verifique o seu spam.",
+      );
+    } catch (error) {
+      console.error(error);
+      Alert.alert("Error", error.message);
+    }
+  };
 
   const signIn = async () => {
     setLoading(true);
@@ -60,6 +74,9 @@ export default function TelaLogIn() {
         value={password}
         onChangeText={setPassword}
       />
+      <TouchableOpacity style={styles.esqueciasenha} onPress={forgotPassword}>
+        <Text style={styles.esqueciasenhaText}>Esqueci a senha</Text>
+      </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.button}
@@ -120,6 +137,16 @@ const styles = StyleSheet.create({
   buttonText: {
     fontFamily: "System",
     fontSize: 16,
+    color: "#6b6b9a",
+  },
+  esqueciasenha: {
+    alignSelf: "flex-end",
+    marginTop: 8,
+    marginBottom: 10,
+  },
+  esqueciasenhaText: {
+    fontFamily: "System",
+    fontSize: 14,
     color: "#6b6b9a",
   },
 });

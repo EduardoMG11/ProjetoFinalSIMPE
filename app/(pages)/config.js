@@ -38,7 +38,12 @@ export default function Config() {
       >
         <Text style={styles.textButton}>Sair</Text>
       </TouchableOpacity>
-      {/*Depois pesquisar como faz para apagar conta */}
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => router.replace("/(auth)/apagarConta")}
+      >
+        <Text style={styles.textButton}>Apagar conta</Text>
+      </TouchableOpacity>
     </View>
   );
 }
