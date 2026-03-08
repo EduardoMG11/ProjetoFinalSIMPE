@@ -1,0 +1,249 @@
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  Dimensions,
+  Alert,
+} from "react-native";
+import { useState, useEffect, useContext } from "react";
+import firestore from "@react-native-firebase/firestore";
+import { useRouter, useLocalSearchParams } from "expo-router";
+import Video from "react-native-video";
+import Carousel from "react-native-reanimated-carousel";
+import { AuthContext } from "../../context/AuthContext";
+
+export default function OutroServico() {
+  const { id } = useLocalSearchParams();
+  const user = useContext(AuthContext);
+  const [servico, setServico] = useState(null);
+  const [perfil, setPerfil] = useState(null);
+  const router = useRouter();
+
+  const { width } = Dimensions.get("window");
+
+  useEffect(() => {
+    if (!user) {
+      return;
+    }
+    const carregarUsuario = async () => {
+      try {
+        const usuario = await firestore()
+          .collection("usuariosPublico")
+          .doc(user.uid)
+          .get();
+        if (usuario.exists) {
+          setPerfil(usuario.data());
+        }
+      } catch (error) {
+        console.error("Erro ao buscar perfil:", error);
+      }
+    };
+    carregarUsuario();
+    const listarServico = async () => {
+      try {
+        const serv = firestore().collection("servicos").doc(id);
+        const doc = await serv.get();
+        if (doc.exists) {
+          setServico(doc.data());
+        }
+      } catch (error) {
+        console.error("Erro ao buscar serviço:", error);
+      }
+    };
+    listarServico();
+  }, [id, user]);
+
+  const demonstrarInteresse = async () => {
+    try {
+      if (!perfil) {
+        throw new Error("Perfil não encontrado");
+      }
+      if (!user) {
+        throw new Error("Usuário não autenticado");
+      }
+      if (
+        perfil.interessadoEmpresa.length >= 15 ||
+        perfil.interessadoServico.length >= 15
+      ) {
+        throw new Error(
+          "Limite de interesses atingido, remova algum para demonstrar interesse",
+        );
+      }
+      await firestore()
+        .collection("usuariosPublico")
+        .doc(user.uid)
+        .update({
+          interessadoServico: firestore.FieldValue.arrayUnion(id),
+        });
+      await firestore()
+        .collection("usuariosPublico")
+        .doc(user.uid)
+        .update({
+          interessadoEmpresa: firestore.FieldValue.arrayUnion(servico.usuario),
+        });
+      setPerfil((prev) => ({
+        ...prev,
+        interessadoEmpresa: [...prev.interessadoEmpresa, servico.usuario],
+        interessadoServico: [...prev.interessadoServico, id],
+      }));
+      Alert.alert("Interesse demonstrado com sucesso");
+    } catch (error) {
+      console.error("Erro ao demonstrar interesse:", error);
+    }
+  };
+
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      {servico && (
+        <>
+          <Text style={styles.title}>{servico.nome}</Text>
+          <Text style={styles.title}>
+            Empresa anunciante: {servico.nomeNegocio}
+          </Text>
+          <View style={styles.infoContainer}>
+            <Text style={styles.descricao}>Descrição: {servico.descricao}</Text>
+          </View>
+          <View style={styles.infoContainer}>
+            <Text style={styles.text}>Área de atuação: {servico.area}</Text>
+          </View>
+          <View style={styles.infoContainer}>
+            <Text style={styles.text}>
+              O que espero em troca: {servico.troca}
+            </Text>
+          </View>
+          <View style={styles.infoContainer}>
+            <Text style={styles.text}>Estado: {servico.estado}</Text>
+          </View>
+          <View style={styles.videoContainer}>
+            <Video
+              controls={true}
+              source={{ uri: servico.video }}
+              style={styles.video}
+            />
+          </View>
+
+          {servico?.fotos?.length > 0 && (
+            <Carousel
+              loop
+              width={width * 0.9}
+              height={220}
+              data={servico.fotos}
+              autoPlay={true}
+              autoPlayInterval={3000}
+              scrollAnimationDuration={800}
+              renderItem={({ item }) => (
+                <View
+                  style={{
+                    width: width * 0.9,
+                    height: 220,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Image
+                    source={{ uri: item }}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: 8,
+                    }}
+                    resizeMode="cover"
+                  />
+                </View>
+              )}
+            />
+          )}
+          <TouchableOpacity style={styles.button} onPress={demonstrarInteresse}>
+            <Text>Demonstrar interesse neste serviço</Text>
+          </TouchableOpacity>
+        </>
+      )}
+    </ScrollView>
+  );
+}
+const styles = StyleSheet.create({
+  container: {
+    flexGrow: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    paddingVertical: 16,
+  },
+
+  title: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 16,
+    textAlign: "center",
+    width: "90%",
+  },
+
+  infoContainer: {
+    width: "90%",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 12,
+    backgroundColor: "#fff",
+    elevation: 3,
+  },
+
+  descricao: {
+    fontSize: 16,
+    textAlign: "center",
+  },
+
+  text: {
+    fontSize: 15,
+    textAlign: "center",
+  },
+  textButton: {
+    fontSize: 15,
+    textAlign: "center",
+    color: "#000",
+    fontWeight: "bold",
+    padding: 10,
+    fontFamily: "System",
+  },
+
+  videoContainer: {
+    width: "90%",
+    height: 220,
+    borderRadius: 8,
+    marginBottom: 16,
+    overflow: "hidden",
+    borderWidth: 1,
+    borderColor: "#ccc",
+  },
+
+  video: {
+    width: "100%",
+    height: "100%",
+  },
+
+  image: {
+    width: "90%",
+    height: 180,
+    borderRadius: 8,
+    marginBottom: 12,
+    resizeMode: "cover",
+  },
+  button: {
+    backgroundColor: "#fff",
+    paddingVertical: 15,
+    marginHorizontal: 5,
+    borderRadius: 12,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 5,
+    marginBottom: 10,
+    padding: 20,
+  },
+});

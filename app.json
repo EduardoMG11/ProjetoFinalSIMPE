@@ -1,0 +1,49 @@
+{
+  "expo": {
+    "name": "SistemaIntegrado",
+    "slug": "sistemaintegrado",
+    "scheme": "simpe",
+    "newArchEnabled": true,
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "kotlinVersion": "2.0.21"
+          }
+        }
+      ],
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth"
+    ],
+
+    "ios": {
+      "bundleIdentifier": "com.simpe1.sistemaintegrado",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "newArchEnabled": true,
+      "package": "com.simpe.sistemaintegrado",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/logo.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "googleServicesFile": "./google-services.json"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "05690aec-71dc-4931-9b75-35a88369196f"
+      },
+      "router": {}
+    },
+    "owner": "morschgadelhaeduardo"
+  }
+}
