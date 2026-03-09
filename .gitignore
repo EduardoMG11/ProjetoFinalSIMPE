@@ -1,5 +1,10 @@
 # dependencies
 node_modules/
+<<<<<<< HEAD
+=======
+android/
+ios/
+>>>>>>> branch-plataforma-de-ensino
 
 # Expo
 .expo/

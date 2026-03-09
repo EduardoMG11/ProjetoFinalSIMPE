@@ -11,7 +11,7 @@ import { useState, useContext } from "react";
 import firestore from "@react-native-firebase/firestore";
 import storage from "@react-native-firebase/storage";
 import * as ImagePicker from "expo-image-picker";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function RegistrarServico() {
   const [fotos, setFotos] = useState([]);

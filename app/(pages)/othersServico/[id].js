@@ -159,12 +159,15 @@ export default function OutroServico() {
           <TouchableOpacity style={styles.button} onPress={demonstrarInteresse}>
             <Text>Demonstrar interesse neste serviço</Text>
           </TouchableOpacity>
+<<<<<<< HEAD
           <TouchableOpacity
             style={styles.button}
             onPress={() => router.push(`/empresas/${servico.usuario}`)}
           >
             <Text>Vem empresa</Text>
           </TouchableOpacity>
+=======
+>>>>>>> branch-plataforma-de-ensino
         </>
       )}
     </ScrollView>

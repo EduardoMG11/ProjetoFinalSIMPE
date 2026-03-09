@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { useState, useEffect, useContext } from "react";
 import firestore from "@react-native-firebase/firestore";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function analise() {
   const user = useContext(AuthContext);

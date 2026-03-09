@@ -22,28 +22,11 @@ export default function Config() {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => router.push("/(pages)/interessesServico")}
-      >
-        <Text style={styles.textButton}>Serviços que você se interessou</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => router.push("/(pages)/interessesEmpresa")}
-      >
-        <Text style={styles.textButton}>Empresas que você se interessou</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
         onPress={() => router.replace("/")}
       >
         <Text style={styles.textButton}>Sair</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => router.replace("/(auth)/apagarConta")}
-      >
-        <Text style={styles.textButton}>Apagar conta</Text>
-      </TouchableOpacity>
+      {/*Depois pesquisar como faz para apagar conta */}
     </View>
   );
 }

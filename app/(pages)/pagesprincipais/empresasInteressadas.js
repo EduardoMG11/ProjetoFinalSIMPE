@@ -12,7 +12,7 @@ import {
 import { useState, useEffect, useContext } from "react";
 import firestore from "@react-native-firebase/firestore";
 import { useRouter, useLocalSearchParams } from "expo-router";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function EmpresasInteressadas() {
   const router = useRouter();
