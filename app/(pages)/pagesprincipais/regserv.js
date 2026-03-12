@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  Platform,
 } from "react-native";
 import { useState, useContext } from "react";
 import firestore from "@react-native-firebase/firestore";
@@ -104,27 +105,40 @@ export default function RegistrarServico() {
 
   const uploadFotoServico = async (uri, index) => {
     if (!user) throw new Error("Usuário não autenticado");
+
+    const uploadUri =
+      Platform.OS === "android" ? uri : uri.replace("file://", "");
+
     const ref = storage().ref(
       `fotosServico/${user.uid}/foto_${Date.now()}_${index}.jpg`,
     );
-    const response = await fetch(uri);
-    const blob = await response.blob();
-    await ref.put(blob);
+
+    await ref.putFile(uploadUri);
     return await ref.getDownloadURL();
   };
 
   const videoServicoUrl = async (uri) => {
     if (!user) throw new Error("Usuário não autenticado");
+
+    const uploadUri =
+      Platform.OS === "android" ? uri : uri.replace("file://", "");
+
     const ref = storage().ref(
       `videosServico/${user.uid}/video_${Date.now()}.mp4`,
     );
-    const response = await fetch(uri);
-    const blob = await response.blob();
-    await ref.put(blob);
+
+    await ref.putFile(uploadUri);
     return await ref.getDownloadURL();
   };
 
   const handleRegisterServico = async () => {
+    if (fotos.length !== 3) {
+      Alert.alert(
+        "Fotos obrigatórias",
+        "O serviço deve conter exatamente 3 fotos.",
+      );
+      return;
+    }
     setLoading(true);
     try {
       if (!user || !user.uid) {
@@ -139,14 +153,6 @@ export default function RegistrarServico() {
       let videoURL = "";
       if (video) {
         videoURL = await videoServicoUrl(video);
-      }
-
-      if (fotos.length !== 3) {
-        Alert.alert(
-          "Fotos obrigatórias",
-          "O serviço deve conter exatamente 3 fotos.",
-        );
-        return;
       }
 
       const nomePesquisa = normalizar(nomeServico);

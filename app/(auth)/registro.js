@@ -95,6 +95,7 @@ export default function TelaRegistro() {
         areaPesquisa,
         estadoPesquisa,
         createdAt: firestore.FieldValue.serverTimestamp(),
+        negociacoes: 0,
       });
       await firestore().collection("usuariosPublico").doc(uid).set({
         nome,

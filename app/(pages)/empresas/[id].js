@@ -97,6 +97,11 @@ export default function Empresa() {
             </Text>
           </View>
           <View style={styles.infoContainer}>
+            <Text style={styles.text}>
+              Participou em {empresa.negociacoes} negociações
+            </Text>
+          </View>
+          <View style={styles.infoContainer}>
             <Text style={styles.text}>Área de atuação: {empresa.area}</Text>
           </View>
           <View style={styles.infoContainer}>
@@ -118,7 +123,15 @@ export default function Empresa() {
           <TouchableOpacity style={styles.button} onPress={demonstrarInteresse}>
             <Text>Demonstrar interesse nesta empresa</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() =>
+              router.push({
+                pathname: "/contatarEmpresa/[id]",
+                params: { id: id },
+              })
+            }
+          >
             <Text style={styles.textButton}>Entrar em contato</Text>
           </TouchableOpacity>
         </>
@@ -134,6 +147,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: "center",
     paddingVertical: 20,
+    paddingBottom: 50,
   },
 
   image: {

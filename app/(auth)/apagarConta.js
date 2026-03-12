@@ -39,13 +39,12 @@ export default function ApagarConta() {
         firestore().collection("usuarios").doc(user.uid).delete(),
       ]);
 
-      user.delete();
+      await user.delete();
 
       Alert.alert("Sucesso", "Conta deletada", [
         { text: "OK", onPress: () => router.replace("/") },
       ]);
     } catch (error) {
-      Alert.alert("Erro ao remover conta");
       console.error(error);
       if (error.code === "auth/requires-recent-login") {
         Alert.alert(

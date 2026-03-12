@@ -116,7 +116,7 @@ export default function EmpresaServico() {
       }
       renderItem={({ item }) => (
         <View style={styles.infoContainer}>
-          <Text style={styles.text1}>Nome: {item.nome}</Text>
+          <Text style={styles.text2}>Nome: {item.nome}</Text>
 
           <Text style={styles.descricao}>Descrição: {item.descricao}</Text>
 
@@ -139,8 +139,20 @@ export default function EmpresaServico() {
               Demonstre interesse pela empresa
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.textButton}>
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => router.push(`(pages)/contatarEmpresa/${id}`)}
+          >
+            <Text
+              style={styles.textButton}
+              onPress={() =>
+                router.push({
+                  pathname: "/contatarEmpresa/[id]",
+                  params: { id: id },
+                })
+              }
+            >
               Entre em contato com a empresa
             </Text>
           </TouchableOpacity>
@@ -160,16 +172,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   infoContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 10,
-    justifyContent: "space-between",
-    width: "75%",
-    borderStyle: "solid",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    marginBottom: 20,
+    width: Dimensions.get("window").width * 0.9,
     borderWidth: 1,
     borderColor: "#ccc",
-    borderRadius: 8,
-    padding: 10,
+    borderRadius: 12,
+    padding: 15,
+    backgroundColor: "#fff",
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   item: {
     flexDirection: "column",
@@ -187,6 +203,14 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   text1: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 20,
+    fontFamily: "System",
+    paddingHorizontal: 20,
+  },
+  text2: {
     fontSize: 20,
     fontWeight: "bold",
     color: "#333",

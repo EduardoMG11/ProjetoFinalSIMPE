@@ -11,7 +11,7 @@ import {
 import { useState, useEffect, useContext } from "react";
 import firestore from "@react-native-firebase/firestore";
 import { useRouter } from "expo-router";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function InteressesServico() {
   const [servicos, setServicos] = useState([]);
@@ -82,15 +82,24 @@ export default function InteressesServico() {
               style={styles.item}
             >
               <View style={styles.infoContainer}>
-                <Text style={styles.itemText}>{item.nomeNegocio}</Text>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text style={styles.itemText}>{item.nomeNegocio}</Text>
+                  <TouchableOpacity onPress={() => removerInteresse(item)}>
+                    <Image
+                      style={{ width: 25, height: 25 }}
+                      source={require("../../../assets/apagar.png")}
+                    />
+                  </TouchableOpacity>
+                </View>
                 <Text style={styles.descricao}>Área: {item.area}</Text>
                 <Text style={styles.descricao}>Clique aqui para ver mais!</Text>
-                <TouchableOpacity onPress={() => removerInteresse(item)}>
-                  <Image
-                    style={{ width: 20, height: 20 }}
-                    source={require("../../assets/apagar.png")}
-                  />
-                </TouchableOpacity>
               </View>
             </TouchableOpacity>
           )}

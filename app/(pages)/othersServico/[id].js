@@ -159,20 +159,31 @@ export default function OutroServico() {
           <TouchableOpacity style={styles.button} onPress={demonstrarInteresse}>
             <Text>Demonstrar interesse neste serviço</Text>
           </TouchableOpacity>
-<<<<<<< HEAD
           <TouchableOpacity
             style={styles.button}
             onPress={() => router.push(`/empresas/${servico.usuario}`)}
           >
-            <Text>Vem empresa</Text>
+            <Text>Ver empresa</Text>
           </TouchableOpacity>
-=======
->>>>>>> branch-plataforma-de-ensino
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() =>
+              router.push({
+                pathname: "/contatarEmpresa/[id]",
+                params: { id: servico.usuario },
+              })
+            }
+          >
+            <Text>Entrar em contato com a empresa</Text>
+          </TouchableOpacity>
         </>
       )}
     </ScrollView>
   );
 }
+
+const largura = Dimensions.get("window").width * 0.8;
+
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
@@ -180,6 +191,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     paddingVertical: 16,
+    paddingBottom: 50,
   },
 
   title: {
@@ -253,6 +265,11 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 5,
     marginBottom: 10,
-    padding: 20,
+    width: largura,
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    padding: 10,
   },
 });

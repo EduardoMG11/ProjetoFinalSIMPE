@@ -1,51 +1,62 @@
-export type DescriptionItem = {
-    main:string;
-    sub:string[];
-}
+import video1 from "./videos/financeiro.mp4";
+import video2 from "./videos/marketing.mp4";
+import video3 from "./videos/networking.mp4";
 
-export type Category = {
-    title: string;
-    description: DescriptionItem[];
+export type DescriptionItem = {
+  main: string;
+  sub: string[];
 };
 
-    export type Data = Category[];
+export type Category = {
+  title: string;
+  description: DescriptionItem[];
+  videofi?: any;
+};
 
-    const data: Data = [
-        {
-            title: "Finanças",
-            description: [
-                {main: "Nesse módulo você aprenderá:",
-                sub: ["1. Como criar um orçamento pessoal",
-                      "2. Como economizar dinheiro",
-                      "3. Reserva de emergência"
-                ]
-                },
-                
-                
+export type Data = Category[];
 
-            ]
-            
-        },
-        {
-            title: "Marketing",
-            description: [
-                {main: "Nesse módulo você aprenderá:",
-                sub: ["1. Definição de Persona",
-                    "2. Funil de Vendas",
-                    "3. Estratégias de Marketing Digital",
-                    ]}
-            ],
-        },
-        {
-        title: "Networking",
-        description: [
-            {main: "Nesse módulo você aprenderá:",
-            sub: [
-                "1. Pitch de vendas pessoal",
-                "2. Manutenção de contatos",
-                "3. Eventos de networking"]}
-        ]
-        }
-    ]
+const data: Data = [
+  {
+    title: "Finanças",
+    videofi: video1,
+    description: [
+      {
+        main: "Nesse módulo você aprenderá:",
+        sub: [
+          "1. Receitas",
+          "2. Despesas",
+          "3. Entendimento de planejamento financeiro",
+        ],
+      },
+    ],
+  },
+  {
+    title: "Marketing",
+    videofi: video2,
+    description: [
+      {
+        main: "Nesse módulo você aprenderá:",
+        sub: [
+          "1. Público-alvo",
+          "2. Diferencial competitivo",
+          "3. Comunicação",
+        ],
+      },
+    ],
+  },
+  {
+    title: "Networking",
+    videofi: video3,
+    description: [
+      {
+        main: "Nesse módulo você aprenderá:",
+        sub: [
+          "1. Troca de valores",
+          "2.  O que é Networking e formação de redes de contato",
+        ],
+      },
+    ],
+  },
+];
 
-    export default data;
+export default data;

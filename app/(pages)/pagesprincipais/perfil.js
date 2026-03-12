@@ -48,7 +48,7 @@ export default function Perfil() {
         <Text style={styles.text}>Nome do negócio: {perfil.nomeNegocio}</Text>
       </View>
       <View style={styles.infoContainer}>
-        <Text style={styles.text}>E-mail: {user.email}</Text>
+        <Text style={styles.text}>E-mail: {perfil.email}</Text>
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.text}>Endereço: {perfil.endereco}</Text>
@@ -64,7 +64,7 @@ export default function Perfil() {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => router.push("/(pages)/servicosPessoais")}
+        onPress={() => router.push("/(pages)/pagesprincipais/servicosPessoais")}
       >
         <Text style={styles.textButton}>Veja seus serviços</Text>
       </TouchableOpacity>

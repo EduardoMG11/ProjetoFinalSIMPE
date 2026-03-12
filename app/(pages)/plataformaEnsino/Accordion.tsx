@@ -1,19 +1,9 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ActivityIndicator } from 'react-native';
 import { Category } from './data';
-
+import { useVideoPlayer, VideoView } from 'expo-video';
 import Chevron from './Chevron';
-import Animated, { 
-  Extrapolate, 
-  interpolate, 
-  measure, 
-  runOnUI, 
-  useAnimatedRef, 
-  useAnimatedStyle, 
-  useDerivedValue, 
-  useSharedValue, 
-  withTiming 
-} from 'react-native-reanimated';
+import Animated, { Extrapolate, interpolate, measure, runOnUI, useAnimatedRef, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming } from 'react-native-reanimated';
 
 type Props = {
     value: Category;
@@ -23,6 +13,10 @@ const Accordion = ({ value }: Props) => {
     const listRef = useAnimatedRef<View>(); 
     const heightValue = useSharedValue(0);
     const open = useSharedValue(false);
+    const player: any = useVideoPlayer(value.videofi, (player) => {
+        player.loop = false;
+        player.pause(); 
+    });
 
     const progress = useDerivedValue(() => {
         return open.value ? withTiming(1) : withTiming(0);
@@ -56,6 +50,17 @@ const Accordion = ({ value }: Props) => {
 
             <Animated.View style={[styles.overflowHidden, heightAnimationStyle]}>
                 <View ref={listRef} style={styles.contentInternal}>
+                    {value.videofi && (
+                        <VideoView 
+                           player={player as any} 
+                           style={styles.video as any} 
+                           {...({
+                                allowsFullscreen: true,
+                                allowsPictureInPicture: true,
+                                contentFit: 'cover'
+                            } as any)}
+                        />
+                       )}
                     {value.description.map((v, i) => (
                         <View key={i} style={styles.content}>
                             <Text style={styles.textContent}>{v.main}</Text>
@@ -122,5 +127,14 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: '#555',
         marginTop: 5,
-    }
-});
+    },
+    video: {
+        width:"100%",
+        height: 200,
+        backgroundColor: '#000',
+    },
+    
+    });
+
+
+

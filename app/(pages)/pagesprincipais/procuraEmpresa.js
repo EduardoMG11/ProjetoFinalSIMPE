@@ -20,6 +20,8 @@ export default function ProcuraEmpresas() {
   const router = useRouter();
 
   useEffect(() => {
+    if (!user || !user.uid) return;
+
     if (pesquisa.length < 3) {
       carregarServicos();
       return;
@@ -28,9 +30,11 @@ export default function ProcuraEmpresas() {
     if (filtro === "nome") buscarPorNome();
     if (filtro === "area") buscarPorArea();
     if (filtro === "estado") buscarPorEstado();
-  }, [pesquisa, filtro]);
+  }, [pesquisa, filtro, user]);
 
   async function carregarServicos() {
+    if (!user?.uid) return;
+
     const empresa = await firestore()
       .collection("usuariosPublico")
       .where(firestore.FieldPath.documentId(), "!=", user.uid)
@@ -132,7 +136,7 @@ export default function ProcuraEmpresas() {
           ]}
           onPress={() => setFiltro("estado")}
         >
-          <Text style={styles.filtroTexto}>Localização</Text>
+          <Text style={styles.filtroTexto}>Local (UF)</Text>
         </Pressable>
       </View>
       <View>

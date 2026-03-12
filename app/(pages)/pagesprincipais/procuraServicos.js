@@ -131,7 +131,7 @@ export default function ProcuraServicos() {
           ]}
           onPress={() => setFiltro("estado")}
         >
-          <Text style={styles.filtroTexto}>Localização</Text>
+          <Text style={styles.filtroTexto}>Local (UF)</Text>
         </Pressable>
       </View>
       <View>

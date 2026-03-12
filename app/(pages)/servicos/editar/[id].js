@@ -65,7 +65,7 @@ export default function editarServico() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Editar Serviço: {servico.nome}</Text>
+      <Text style={styles.text1}>Editar Serviço: {servico.nome}</Text>
 
       <TextInput
         style={styles.input}
@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
     color: "#333",
     marginBottom: 20,
     fontFamily: "System",
+    paddingHorizontal: 20,
   },
   input: {
     width: "90%",

@@ -9,14 +9,18 @@ export default function TelaInicial() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.push("(pages)/pagesprincipais/perfil")}>
+        <TouchableOpacity
+          onPress={() => router.push("(pages)/pagesprincipais/perfil")}
+        >
           <Image
             source={require("../../assets/perfil.png")}
             style={{ width: 50, height: 50 }}
           />
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => router.push("(pages)/pagesprincipais/config")}>
+        <TouchableOpacity
+          onPress={() => router.push("(pages)/pagesprincipais/config")}
+        >
           <Image
             source={require("../../assets/config.png")}
             style={{ width: 30, height: 30 }}
@@ -45,7 +49,9 @@ export default function TelaInicial() {
 
           <TouchableOpacity
             style={styles.opcao}
-            onPress={() => router.push("(pages)/pagesprincipais/procuraServicos")}
+            onPress={() =>
+              router.push("(pages)/pagesprincipais/procuraServicos")
+            }
           >
             <Image
               source={require("../../assets/pesquisa.png")}
@@ -62,7 +68,9 @@ export default function TelaInicial() {
         >
           <TouchableOpacity
             style={styles.opcao}
-            onPress={() => router.push("(pages)/pagesprincipais/empresasInteressadas")}
+            onPress={() =>
+              router.push("(pages)/pagesprincipais/empresasInteressadas")
+            }
           >
             <Image
               source={require("../../assets/empresa.png")}
@@ -73,7 +81,9 @@ export default function TelaInicial() {
 
           <TouchableOpacity
             style={styles.opcao}
-            onPress={() => router.push("(pages)/pagesprincipais/procuraEmpresa")}
+            onPress={() =>
+              router.push("(pages)/pagesprincipais/procuraEmpresa")
+            }
           >
             <Image
               source={require("../../assets/procurarEmpresa.png")}
@@ -86,20 +96,18 @@ export default function TelaInicial() {
       <View></View>
       <View style={styles.footer}>
         <TouchableOpacity
-          onPress={() => router.push("(pages)/plataformaEnsino/plataformaEnsino")}
+          onPress={() =>
+            router.push("(pages)/plataformaEnsino/plataformaEnsino")
+          }
         >
           <Image
             source={require("../../assets/plataformaensino.png")}
             style={{ width: 35, height: 35 }}
           />
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Image
-            source={require("../../assets/chat.png")}
-            style={{ width: 35, height: 35 }}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => router.push("(pages)/pagesprincipais/analise")}>
+        <TouchableOpacity
+          onPress={() => router.push("(pages)/pagesprincipais/analise")}
+        >
           <Image
             source={require("../../assets/analise.png")}
             style={{ width: 35, height: 35 }}

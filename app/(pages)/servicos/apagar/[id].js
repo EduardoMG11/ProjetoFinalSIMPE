@@ -40,7 +40,7 @@ export default function ApagarServico() {
     try {
       if (servico?.nome === nome) {
         await firestore().collection("servicos").doc(id).delete();
-        router.replace("/");
+        router.replace("/(app)/homepage");
         Alert.alert("Serviço apagado com sucesso!");
       }
     } catch (error) {
