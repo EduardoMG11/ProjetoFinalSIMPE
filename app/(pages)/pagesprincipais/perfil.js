@@ -54,6 +54,9 @@ export default function Perfil() {
         <Text style={styles.text}>Endereço: {perfil.endereco}</Text>
       </View>
       <View style={styles.infoContainer}>
+        <Text style={styles.text}>Estado: {perfil.estado}</Text>
+      </View>
+      <View style={styles.infoContainer}>
         <Text style={styles.text}>Área de atuação: {perfil.area}</Text>
       </View>
       <TouchableOpacity

@@ -155,6 +155,12 @@ export default function EditarPerfil() {
         placeholder="Endereço"
       />
       <TextInput
+        value={perfil.estado}
+        onChangeText={(text) => setPerfil({ ...perfil, estado: text })}
+        style={styles.input}
+        placeholder="Estado (UF)"
+      />
+      <TextInput
         value={perfil.area}
         onChangeText={(text) => setPerfil({ ...perfil, area: text })}
         style={styles.input}
