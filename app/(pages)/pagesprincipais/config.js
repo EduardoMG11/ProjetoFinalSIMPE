@@ -7,6 +7,7 @@ export default function Config() {
 
   async function sair() {
     await signOut(auth);
+    router.dismissAll();
     router.replace("/");
   }
   return (
