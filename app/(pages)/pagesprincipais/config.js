@@ -6,7 +6,7 @@ export default function Config() {
   const router = useRouter();
 
   async function sair() {
-    await signOut(auth);
+    await auth().signOut();
     router.dismissAll();
     router.replace("/");
   }
