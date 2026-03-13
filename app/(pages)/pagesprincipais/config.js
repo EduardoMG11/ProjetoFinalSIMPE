@@ -1,8 +1,14 @@
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
+import auth from "@react-native-firebase/auth";
 
 export default function Config() {
   const router = useRouter();
+
+  async function sair() {
+    await signOut(auth);
+    router.replace("/");
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Configurações</Text>
@@ -36,10 +42,7 @@ export default function Config() {
       >
         <Text style={styles.textButton}>Empresas que você se interessou</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => router.replace("/")}
-      >
+      <TouchableOpacity style={styles.button} onPress={sair}>
         <Text style={styles.textButton}>Sair</Text>
       </TouchableOpacity>
       <TouchableOpacity
