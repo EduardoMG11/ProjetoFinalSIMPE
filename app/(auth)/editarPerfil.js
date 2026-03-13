@@ -29,21 +29,18 @@ export default function EditarPerfil() {
       { text: "Cancelar", style: "cancel" },
     ]);
   };
-  const fotoPerfilUrl = async (uri) => {
-    {
-      /* Transformar a foto de perfil em url */
+  const fotoPerfilUrl = async (uri, uid) => {
+    try {
+      const ref = storage().ref(`users/${uid}/profile.jpg`);
+
+      await ref.putFile(uri);
+
+      const url = await ref.getDownloadURL();
+      return url;
+    } catch (error) {
+      console.error("Erro detalhado no upload:", error);
+      throw new Error("Falha ao subir imagem: " + error.message);
     }
-    const user = auth().currentUser;
-    if (!user) throw new Error("Usuário não autenticado");
-
-    const ref = storage().ref(`users/${user.uid}/profile.jpg`);
-
-    const response = await fetch(uri);
-    const blob = await response.blob();
-
-    await ref.put(blob);
-
-    return await ref.getDownloadURL();
   };
   useEffect(() => {
     async function carregarPerfil() {
@@ -87,6 +84,13 @@ export default function EditarPerfil() {
 
       await firestore()
         .collection("usuarios")
+        .doc(user.uid)
+        .update({
+          ...perfil,
+          foto: fotoUrl,
+        });
+      await firestore()
+        .collection("usuariosPublico")
         .doc(user.uid)
         .update({
           ...perfil,

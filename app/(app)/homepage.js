@@ -4,96 +4,97 @@ import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function TelaInicial() {
-  const router = useRouter();
+  const router = useRouter(); /* redirecionamento */
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => router.push("(pages)/pagesprincipais/perfil")}
-        >
-          <Image
-            source={require("../../assets/perfil.png")}
-            style={{ width: 50, height: 50 }}
-          />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => router.push("(pages)/pagesprincipais/config")}
-        >
-          <Image
-            source={require("../../assets/config.png")}
-            style={{ width: 30, height: 30 }}
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.txtbox}>
-        <Text style={styles.txtboasvindas}>Bem vindo de volta!</Text>
-      </View>
-      <View style={styles.atalhos}>
-        <View
-          style={{
-            flex: 1,
-          }}
-        >
+      <View style={styles.mainContent}>
+        <View style={styles.header}>
           <TouchableOpacity
-            style={styles.opcao}
-            onPress={() => router.push("(pages)/pagesprincipais/regserv")}
+            onPress={() => router.push("(pages)/pagesprincipais/perfil")}
           >
             <Image
-              source={require("../../assets/servico.png")}
+              source={require("../../assets/perfil.png")}
+              style={{ width: 50, height: 50 }}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => router.push("(pages)/pagesprincipais/config")}
+          >
+            <Image
+              source={require("../../assets/config.png")}
               style={{ width: 30, height: 30 }}
             />
-            <Text style={styles.txtopcao}>Registrar Serviço</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.opcao}
-            onPress={() =>
-              router.push("(pages)/pagesprincipais/procuraServicos")
-            }
-          >
-            <Image
-              source={require("../../assets/pesquisa.png")}
-              style={{ width: 40, height: 40 }}
-            />
-            <Text style={styles.txtopcao}>Pesquisa de serviços</Text>
           </TouchableOpacity>
         </View>
-        <View
-          style={{
-            flex: 1,
-            marginLeft: 15,
-          }}
-        >
-          <TouchableOpacity
-            style={styles.opcao}
-            onPress={() =>
-              router.push("(pages)/pagesprincipais/empresasInteressadas")
-            }
-          >
-            <Image
-              source={require("../../assets/empresa.png")}
-              style={{ width: 35, height: 35 }}
-            />
-            <Text style={styles.txtopcao}>Empresas interessadas</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.opcao}
-            onPress={() =>
-              router.push("(pages)/pagesprincipais/procuraEmpresa")
-            }
-          >
-            <Image
-              source={require("../../assets/procurarEmpresa.png")}
-              style={{ width: 35, height: 35 }}
-            />
-            <Text style={styles.txtopcao}>Pesquisa de empresas</Text>
-          </TouchableOpacity>
+        <View style={styles.txtbox}>
+          <Text style={styles.txtboasvindas}>Bem vindo de volta!</Text>
         </View>
+        <View style={styles.atalhos}>
+          <View
+            style={{
+              flex: 1,
+            }}
+          >
+            <TouchableOpacity
+              style={styles.opcao}
+              onPress={() => router.push("(pages)/pagesprincipais/regserv")}
+            >
+              <Image
+                source={require("../../assets/servico.png")}
+                style={{ width: 30, height: 30 }}
+              />
+              <Text style={styles.txtopcao}>Registrar Serviço</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.opcao}
+              onPress={() =>
+                router.push("(pages)/pagesprincipais/procuraServicos")
+              }
+            >
+              <Image
+                source={require("../../assets/pesquisa.png")}
+                style={{ width: 40, height: 40 }}
+              />
+              <Text style={styles.txtopcao}>Pesquisa de serviços</Text>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              marginLeft: 15,
+            }}
+          >
+            <TouchableOpacity
+              style={styles.opcao}
+              onPress={() =>
+                router.push("(pages)/pagesprincipais/empresasInteressadas")
+              }
+            >
+              <Image
+                source={require("../../assets/empresa.png")}
+                style={{ width: 35, height: 35 }}
+              />
+              <Text style={styles.txtopcao}>Empresas interessadas</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.opcao}
+              onPress={() =>
+                router.push("(pages)/pagesprincipais/procuraEmpresa")
+              }
+            >
+              <Image
+                source={require("../../assets/procurarEmpresa.png")}
+                style={{ width: 35, height: 35 }}
+              />
+              <Text style={styles.txtopcao}>Pesquisa de empresas</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View></View>
       </View>
-      <View></View>
       <View style={styles.footer}>
         <TouchableOpacity
           onPress={() =>
@@ -122,7 +123,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#eeeeee",
-    paddingTop: 60,
   },
 
   txtboasvindas: {
@@ -134,6 +134,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginLeft: 10,
     textAlign: "left",
+  },
+  mainContent: {
+    flex: 1, // Isso faz com que este bloco ocupe todo o espaço e empurre o footer para baixo
+    paddingTop: 20, // Um leve espaçamento interno no topo se achar necessário
   },
 
   atalhos: {
@@ -185,9 +189,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    paddingBottom: 0,
     height: 70,
-    marginTop: 150,
   },
   txtbox: {
     paddingHorizontal: 20,

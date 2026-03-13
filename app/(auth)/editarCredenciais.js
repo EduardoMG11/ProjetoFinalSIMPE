@@ -4,24 +4,54 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  Image,
+  Alert,
 } from "react-native";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import auth from "@react-native-firebase/auth";
+import firestore from "@react-native-firebase/firestore";
 import { AuthContext } from "../context/AuthContext";
 import { useRouter } from "expo-router";
 
 export default function EditarCredenciais() {
   const user = useContext(AuthContext);
+  {
+    /* chama dados do user */
+  }
+
   const router = useRouter();
   const [novoEmail, setNovoEmail] = useState("");
   const [novaSenha, setNovaSenha] = useState("");
+  const [perfil, setPerfil] = useState({});
   const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    async function carregarPerfil() {
+      {
+        /* Carregar perfil  */
+      }
+      if (!user) return;
 
+      const snap = await firestore()
+        .collection("usuariosPublico")
+        .doc(user.uid)
+        .get();
+
+      if (snap.exists) {
+        setPerfil(snap.data());
+      }
+
+      setLoading(false);
+    }
+
+    carregarPerfil();
+  }, [user]);
   const atualizarSenha = async () => {
     setLoading(true);
     try {
       await auth().currentUser.updatePassword(novaSenha);
+      {
+        /* atualiza a senha o user do authentication */
+      }
+
       alert("Senha atualizada com sucesso!");
       setLoading(false);
       setNovaSenha("");
@@ -38,11 +68,30 @@ export default function EditarCredenciais() {
   const atualizarEmail = async () => {
     setLoading(true);
     try {
-      await auth().currentUser.updateEmail(novoEmail);
+      await auth().currentUser.verifyBeforeUpdateEmail(novoEmail);
+
+      Alert.alert(
+        "Um e-mail de confirmação foi enviado para o novo endereço. O e-mail só será alterado após a verificação.",
+      );
+      {
+        /* atualiza o email user do authentication */
+      }
+      await firestore()
+        .collection("usuariosPublico")
+        .doc(user.uid)
+        .update({
+          ...perfil,
+          email: novoEmail,
+        });
       setLoading(false);
       alert("Email atualizado com sucesso!");
     } catch (error) {
       alert("Erro ao atualizar email: " + error.message);
+      if (error.code === "auth/requires-recent-login") {
+        alert("Faça login novamente para continuar.");
+        await auth().signOut();
+        router.replace("/login");
+      }
     }
   };
 

@@ -13,10 +13,19 @@ import firestore from "@react-native-firebase/firestore";
 
 export default function ApagarConta() {
   const user = useContext(AuthContext);
+  {
+    /* busca credenciais do usuário */
+  }
   const router = useRouter();
+  {
+    /* redirecionamento */
+  }
   const [loading, setLoading] = useState(false);
 
   const deletarServicos = async () => {
+    {
+      /* função de deletar os serviços */
+    }
     if (!user) return;
 
     const servicosUsuario = await firestore()
@@ -34,12 +43,21 @@ export default function ApagarConta() {
     try {
       console.log("deleção iniciada");
       await deletarServicos(user.uid);
+      {
+        /* chama a função de deletar os serviços */
+      }
       await Promise.all([
         firestore().collection("usuariosPublico").doc(user.uid).delete(),
         firestore().collection("usuarios").doc(user.uid).delete(),
       ]);
+      {
+        /* deletam os dados do usuário (ex.: endereço) */
+      }
 
       await user.delete();
+      {
+        /* apaga o user do authentication */
+      }
 
       Alert.alert("Sucesso", "Conta deletada", [
         { text: "OK", onPress: () => router.replace("/") },

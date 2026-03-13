@@ -7,6 +7,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Alert,
+  Platform,
 } from "react-native";
 import { useState } from "react";
 import auth from "@react-native-firebase/auth";
@@ -38,18 +39,18 @@ export default function TelaRegistro() {
     ]);
   };
 
-  const fotoPerfilUrl = async (uri) => {
-    const user = auth().currentUser;
-    if (!user) throw new Error("Usuário não autenticado");
+  const fotoPerfilUrl = async (uri, uid) => {
+    try {
+      const ref = storage().ref(`users/${uid}/profile.jpg`);
 
-    const ref = storage().ref(`users/${user.uid}/profile.jpg`);
+      await ref.putFile(uri);
 
-    const response = await fetch(uri);
-    const blob = await response.blob();
-
-    await ref.put(blob);
-
-    return await ref.getDownloadURL();
+      const url = await ref.getDownloadURL();
+      return url;
+    } catch (error) {
+      console.error("Erro detalhado no upload:", error);
+      throw new Error("Falha ao subir imagem: " + error.message);
+    }
   };
 
   const normalizar = (texto) =>
@@ -75,14 +76,15 @@ export default function TelaRegistro() {
 
       const uid = userCredential.user.uid;
       let fotoURL = null;
-
       if (foto) {
-        fotoURL = await fotoPerfilUrl(foto);
+        fotoURL = await fotoPerfilUrl(foto, uid);
+        console.log("Foto disponível em:", fotoURL);
       }
       const nomePesquisa = normalizar(nomeNegocio);
       const areaPesquisa = normalizar(area);
       const estadoPesquisa = normalizar(estado);
 
+      console.log("Completado");
       await firestore().collection("usuarios").doc(uid).set({
         nome,
         endereco,
@@ -110,15 +112,15 @@ export default function TelaRegistro() {
         nomePesquisa,
         areaPesquisa,
         estadoPesquisa,
+        negociacoes: 0,
         createdAt: firestore.FieldValue.serverTimestamp(),
       });
-
+      console.log("Completado");
       await auth().currentUser.sendEmailVerification();
 
       alert(
         "Conta criada com sucesso! Verifique sua caixa de entrada para verificar seu email. Se não aparecer, verifique sua caixa de spam.",
       );
-
       router.push("/(app)/homepage");
     } catch (error) {
       alert(error.message);
@@ -204,7 +206,7 @@ export default function TelaRegistro() {
         />
         <TextInput
           style={styles.input}
-          placeholder="Estado"
+          placeholder="Estado (UF)"
           value={estado}
           onChangeText={setEstado}
           autoCapitalize="words"
