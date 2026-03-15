@@ -136,7 +136,7 @@ export default function ProcuraServicos() {
       </View>
       <View>
         <TextInput
-          placeholder="Digite aqui para pesquisar serviços para sua empresa"
+          placeholder="Procure serviços para sua empresa"
           value={pesquisa}
           onChangeText={(text) => setPesquisa(text.toLowerCase())}
           style={styles.input}

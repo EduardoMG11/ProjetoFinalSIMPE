@@ -2,6 +2,7 @@
   "expo": {
     "name": "SistemaIntegrado",
     "slug": "sistemaintegrado",
+    "userInterfaceStyle": "light",
     "scheme": "simpe",
     "orientation": "portrait",
     "newArchEnabled": true,

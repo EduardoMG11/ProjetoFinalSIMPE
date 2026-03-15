@@ -110,7 +110,7 @@ export default function ApagarConta() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#eeeeee",
+    backgroundColor: "#fff",
     alignItems: "center",
   },
   text: {

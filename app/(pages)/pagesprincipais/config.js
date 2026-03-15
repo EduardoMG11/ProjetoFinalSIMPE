@@ -59,7 +59,7 @@ export default function Config() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#eeeeee",
+    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },

@@ -255,7 +255,7 @@ export default function TelaRegistro() {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: "#eeeeee",
+    backgroundColor: "#fff",
     justifyContent: "flex-start",
     paddingTop: 20,
     paddingBottom: 30,

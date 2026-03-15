@@ -193,7 +193,7 @@ export default function EditarPerfil() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#eeeeee",
+    backgroundColor: "#fff",
     justifyContent: "flex-start",
     paddingTop: 20,
     paddingBottom: 30,
