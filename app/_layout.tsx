@@ -21,16 +21,12 @@ export default function RootLayout() {
   }, []);
 
   useEffect(() => {
-    if (initializing) return;
+    if (initializing) return; // Espera o Firebase carregar
 
-    const inAuth = segments[0] === "(auth)";
-
-    if (!user && !inAuth) {
-      router.replace("/");
-    }
-
-    if (user && inAuth) {
-      router.replace("/(app)/homepage");
+    if (!user) {
+      router.replace("/login");
+    } else {
+      router.replace("/login");
     }
   }, [user, initializing]);
 
