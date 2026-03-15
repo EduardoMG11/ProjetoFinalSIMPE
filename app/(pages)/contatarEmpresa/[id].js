@@ -157,7 +157,8 @@ export default function ContatarEmpresa() {
         foto: foto,
       });
       Alert.alert(
-        "Mensagem enviada com sucesso! Acompanhe agora sua negociação através de seu e-mail.",
+        "Mensagem enviada com sucesso!",
+        "Acompanhe agora sua negociação através de seu e - mail.",
       );
       router.replace("/(app)/homepage");
     } catch (e) {
@@ -199,7 +200,7 @@ export default function ContatarEmpresa() {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#eeeeee",
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 20,

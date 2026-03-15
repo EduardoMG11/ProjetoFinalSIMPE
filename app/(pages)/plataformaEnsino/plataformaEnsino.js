@@ -1,10 +1,10 @@
-import { 
-  Text, 
-  View, 
-  StyleSheet, 
-  ScrollView, 
-  TouchableOpacity, 
-  Image 
+import {
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Image,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "expo-router";
@@ -20,13 +20,13 @@ export default function plataformaensino() {
           return <Accordion value={value} key={index} />;
         })}
       </View>
-    </ScrollView> 
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-  }
+    backgroundColor: "#eeeeee",
+  },
 });

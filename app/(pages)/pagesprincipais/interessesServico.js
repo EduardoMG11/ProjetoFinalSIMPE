@@ -116,7 +116,7 @@ export default function InteressesServico() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#eeeeee",
     alignItems: "center",
     paddingHorizontal: 16,
   },

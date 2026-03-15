@@ -73,7 +73,7 @@ export default function ServicosPessoais() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#eeeeee",
     alignItems: "center",
     justifyContent: "center",
   },
