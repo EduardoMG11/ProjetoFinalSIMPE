@@ -24,7 +24,7 @@ export default function RootLayout() {
     if (initializing) return; // Espera o Firebase carregar
 
     if (!user) {
-      router.replace("/login");
+      router.replace("/");
     } else {
       router.replace("/login");
     }
