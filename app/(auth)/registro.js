@@ -63,7 +63,7 @@ export default function TelaRegistro() {
 
   const handleRegister = async () => {
     if (senha !== confirmarSenha) {
-      alert("As senhas não coincidem");
+      Alert.alert("As senhas não coincidem");
       return;
     }
     try {
@@ -118,12 +118,20 @@ export default function TelaRegistro() {
       console.log("Completado");
       await auth().currentUser.sendEmailVerification();
 
-      alert(
+      Alert.alert(
+        "Sucesso!",
         "Conta criada com sucesso! Verifique sua caixa de entrada para verificar seu email. Se não aparecer, verifique sua caixa de spam.",
+        [
+          {
+            text: "OK",
+            onPress: () => {
+              router.push("/(app)/homepage");
+            },
+          },
+        ],
       );
-      router.push("/(app)/homepage");
     } catch (error) {
-      alert(error.message);
+      Alert.alert(error.message);
     } finally {
       setLoading(false);
     }
