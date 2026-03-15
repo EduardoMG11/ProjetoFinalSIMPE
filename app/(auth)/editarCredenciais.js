@@ -133,7 +133,7 @@ export default function EditarCredenciais() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#e3e3e3",
     justifyContent: "flex-start",
     paddingTop: 20,
     paddingBottom: 30,

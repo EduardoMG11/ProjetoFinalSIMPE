@@ -122,7 +122,7 @@ export default function TelaInicial() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#e3e3e3",
   },
 
   txtboasvindas: {
@@ -185,8 +185,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     borderTopWidth: 1,
     borderTopColor: "#e0e0e0",
-    elevation: 10,
-    shadowOffset: { width: 0, height: -2 },
+    elevation: 40,
+    shadowOffset: { width: 0, height: -4 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     height: 70,

@@ -200,7 +200,7 @@ export default function ContatarEmpresa() {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#e3e3e3",
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 20,

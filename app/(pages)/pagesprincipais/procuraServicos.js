@@ -181,7 +181,7 @@ export default function ProcuraServicos() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#eeeeee",
+    backgroundColor: "#e3e3e3",
     alignItems: "center",
     paddingHorizontal: 16,
   },
@@ -192,6 +192,7 @@ const styles = StyleSheet.create({
     color: "#333",
     marginBottom: 16,
     fontFamily: "System",
+    paddingHorizontal: 10,
   },
 
   filtroContainer: {

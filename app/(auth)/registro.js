@@ -119,14 +119,12 @@ export default function TelaRegistro() {
       await auth().currentUser.sendEmailVerification();
 
       Alert.alert(
-        "Sucesso!",
-        "Conta criada com sucesso! Verifique sua caixa de entrada para verificar seu email. Se não aparecer, verifique sua caixa de spam.",
+        "Conta criada com sucesso!!",
+        "Verifique seu e-mail para fazer login. Verifique sua caixa de entrada (e spam) para validar seu e-mail.",
         [
           {
             text: "OK",
-            onPress: () => {
-              router.push("/(app)/homepage");
-            },
+            onPress: () => router.replace("/login"),
           },
         ],
       );
@@ -255,7 +253,7 @@ export default function TelaRegistro() {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#e3e3e3",
     justifyContent: "flex-start",
     paddingTop: 20,
     paddingBottom: 30,

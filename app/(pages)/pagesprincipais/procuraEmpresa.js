@@ -182,7 +182,7 @@ export default function ProcuraEmpresas() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#e3e3e3",
     alignItems: "center",
     paddingHorizontal: 16,
   },

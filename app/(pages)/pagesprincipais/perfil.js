@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#fff",
+    backgroundColor: "#e3e3e3",
   },
   image: {
     width: 100,

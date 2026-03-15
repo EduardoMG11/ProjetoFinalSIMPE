@@ -187,7 +187,7 @@ const largura = Dimensions.get("window").width * 0.8;
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#e3e3e3",
     alignItems: "center",
     justifyContent: "flex-start",
     paddingVertical: 16,

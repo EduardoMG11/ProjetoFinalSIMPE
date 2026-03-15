@@ -27,6 +27,6 @@ export default function plataformaensino() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#eeeeee",
+    backgroundColor: "#e3e3e3",
   },
 });

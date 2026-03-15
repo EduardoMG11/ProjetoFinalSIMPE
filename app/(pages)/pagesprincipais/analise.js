@@ -60,7 +60,7 @@ export default function analise() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#e3e3e3",
     paddingTop: 60,
     paddingHorizontal: 15,
   },
