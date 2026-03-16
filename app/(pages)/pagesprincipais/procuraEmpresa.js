@@ -13,8 +13,8 @@ import { useRouter } from "expo-router";
 import { AuthContext } from "../../context/AuthContext";
 
 export default function ProcuraEmpresas() {
-  const [empresa, setEmpresa] = useState([]);
-  const [filtro, setFiltro] = useState("");
+  const [empresas, setEmpresas] = useState([]);
+  const [filtro, setFiltro] = useState("nome");
   const [pesquisa, setPesquisa] = useState("");
   const user = useContext(AuthContext);
   const router = useRouter();
@@ -22,27 +22,31 @@ export default function ProcuraEmpresas() {
   useEffect(() => {
     if (!user || !user.uid) return;
 
-    if (pesquisa.length < 3) {
-      carregarServicos();
-      return;
-    }
+    const delayDebounceFn = setTimeout(() => {
+      if (pesquisa.length < 3) {
+        carregarServicos();
+        return;
+      }
 
-    if (filtro === "nome") buscarPorNome();
-    if (filtro === "area") buscarPorArea();
-    if (filtro === "estado") buscarPorEstado();
+      if (filtro === "nome") buscarPorNome();
+      else if (filtro === "area") buscarPorArea();
+      else if (filtro === "estado") buscarPorEstado();
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
   }, [pesquisa, filtro, user]);
 
   async function carregarServicos() {
     if (!user?.uid) return;
 
-    const empresa = await firestore()
+    const snapshot = await firestore()
       .collection("usuariosPublico")
       .where(firestore.FieldPath.documentId(), "!=", user.uid)
       .limit(100)
       .get();
 
-    setEmpresa(
-      empresa.docs.map((doc) => ({
+    setEmpresas(
+      snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       })),
@@ -57,13 +61,7 @@ export default function ProcuraEmpresas() {
       .endAt(pesquisa + "\uf8ff")
       .get();
 
-    const retirarUsuario = buscaNome.docs
-      .map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }))
-      .filter((doc) => user.uid !== doc.id);
-    setEmpresa(retirarUsuario);
+    atualizarLista(buscaNome);
   }
 
   async function buscarPorArea() {
@@ -74,14 +72,9 @@ export default function ProcuraEmpresas() {
       .endAt(pesquisa + "\uf8ff")
       .get();
 
-    const retirarUsuario = buscaArea.docs
-      .map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }))
-      .filter((doc) => user.uid !== doc.id);
-    setEmpresa(retirarUsuario);
+    atualizarLista(buscaArea);
   }
+
   async function buscarPorEstado() {
     const buscaEstado = await firestore()
       .collection("usuariosPublico")
@@ -90,25 +83,31 @@ export default function ProcuraEmpresas() {
       .endAt(pesquisa + "\uf8ff")
       .get();
 
-    const retirarUsuario = buscaEstado.docs
+    atualizarLista(buscaEstado);
+  }
+
+  function atualizarLista(snapshot) {
+    const retirarUsuario = snapshot.docs
       .map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }))
       .filter((doc) => user.uid !== doc.id);
-    setEmpresa(retirarUsuario);
+
+    setEmpresas(retirarUsuario);
   }
+
   return (
     <View style={styles.container}>
       <Text style={styles.text1}>Procure por empresas para conectar</Text>
+
       <View style={styles.filtroContainer}>
         <Text style={styles.filtro}>Pesquise por:</Text>
+
         <Pressable
-          style={({ pressed }) => [
+          style={[
             styles.buttonBase,
-            {
-              backgroundColor: pressed ? "#434190" : "#5A67D8",
-            },
+            { backgroundColor: filtro === "area" ? "#434190" : "#5A67D8" },
           ]}
           onPress={() => setFiltro("area")}
         >
@@ -116,11 +115,9 @@ export default function ProcuraEmpresas() {
         </Pressable>
 
         <Pressable
-          style={({ pressed }) => [
+          style={[
             styles.buttonBase,
-            {
-              backgroundColor: pressed ? "#434190" : "#5A67D8",
-            },
+            { backgroundColor: filtro === "nome" ? "#434190" : "#5A67D8" },
           ]}
           onPress={() => setFiltro("nome")}
         >
@@ -128,73 +125,68 @@ export default function ProcuraEmpresas() {
         </Pressable>
 
         <Pressable
-          style={({ pressed }) => [
+          style={[
             styles.buttonBase,
-            {
-              backgroundColor: pressed ? "#434190" : "#5A67D8",
-            },
+            { backgroundColor: filtro === "estado" ? "#434190" : "#5A67D8" },
           ]}
           onPress={() => setFiltro("estado")}
         >
           <Text style={styles.filtroTexto}>Local (UF)</Text>
         </Pressable>
       </View>
-      <View>
+
+      <View style={styles.listWrapper}>
         <TextInput
           placeholder="Digite aqui para encontrar empresas para conectar"
+          placeholderTextColor="#666666"
           value={pesquisa}
           onChangeText={(text) => setPesquisa(text.toLowerCase())}
           style={styles.input}
         />
-        <View>
-          <FlatList
-            data={empresa}
-            keyExtractor={(item) => item.id}
-            contentContainerStyle={styles.listContent}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                style={styles.infoContainer}
-                onPress={() => router.push(`/empresas/${item.id}`)}
-              >
-                <View style={styles.item}>
-                  <Text style={styles.itemText}>{item.nomeNegocio}</Text>
-                  <Text style={styles.descricao}>
-                    Área: {item.areaPesquisa}
-                  </Text>
-                  <Text style={styles.descricao}>
-                    Local: {item.estadoPesquisa}
-                  </Text>
-                  <Text style={styles.descricao}>
-                    Empresa: {item.nomeNegocio}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            )}
-          />
-        </View>
-        <TouchableOpacity onPress={() => {}}>
-          <Text>Botão</Text>
-        </TouchableOpacity>
+
+        <FlatList
+          data={empresas}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.listContent}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={styles.infoContainer}
+              onPress={() => router.push(`/empresas/${item.id}`)}
+            >
+              <View style={styles.item}>
+                <Text style={styles.itemText}>{item.nomeNegocio}</Text>
+                <Text style={styles.descricao}>Área: {item.areaPesquisa}</Text>
+                <Text style={styles.descricao}>
+                  Local: {item.estadoPesquisa}
+                </Text>
+                <Text style={styles.descricao}>
+                  Empresa: {item.nomeNegocio}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          )}
+        />
       </View>
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#e3e3e3",
     alignItems: "center",
     paddingHorizontal: 16,
+    paddingTop: 20,
   },
-
   text1: {
     fontSize: 20,
     fontWeight: "bold",
     color: "#333",
     marginBottom: 16,
-    fontFamily: "System",
+    textAlign: "center",
   },
-
   filtroContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -207,74 +199,79 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 12,
   },
-
   filtro: {
     fontSize: 15,
     fontWeight: "500",
-    fontFamily: "System",
     color: "#333",
   },
-
+  listWrapper: {
+    flex: 1,
+    width: "100%",
+    maxWidth: 520,
+  },
   input: {
-    width: 360,
+    width: "100%",
     borderWidth: 1,
     borderColor: "#ccc",
-    padding: 10,
+    padding: 12,
     borderRadius: 10,
     marginBottom: 16,
     backgroundColor: "#fff",
-    placeholderTextColor: "#666666",
   },
-
   infoContainer: {
     width: "100%",
-    maxWidth: 520,
+    minHeight: 120,
+    padding: 15,
     marginBottom: 12,
+    backgroundColor: "#fff",
+    borderRadius: 8,
     borderWidth: 1,
     borderColor: "#ccc",
-    borderRadius: 8,
-    padding: 10,
-    backgroundColor: "#fff",
+    justifyContent: "center",
   },
-
   item: {
     flexDirection: "column",
     alignItems: "flex-start",
     justifyContent: "center",
     width: "100%",
   },
-
   itemText: {
     fontSize: 16,
     fontWeight: "bold",
     marginBottom: 6,
-    fontFamily: "System",
   },
-
   descricao: {
     fontSize: 15,
     fontWeight: "500",
     marginBottom: 4,
-    fontFamily: "System",
     color: "#555",
   },
-
   listContent: {
-    alignItems: "center",
     paddingBottom: 20,
   },
   buttonBase: {
     paddingVertical: 8,
-    paddingHorizontal: 14,
+    paddingHorizontal: 12,
     borderRadius: 8,
     marginHorizontal: 4,
     alignItems: "center",
     justifyContent: "center",
   },
-
   filtroTexto: {
     color: "#FFFFFF",
     fontSize: 14,
     fontWeight: "500",
+  },
+  actionButton: {
+    backgroundColor: "#333",
+    padding: 15,
+    borderRadius: 8,
+    alignItems: "center",
+    marginTop: 10,
+    marginBottom: 20,
+  },
+  actionButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
   },
 });
