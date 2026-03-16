@@ -20,16 +20,6 @@ export default function RootLayout() {
     return unsub;
   }, []);
 
-  useEffect(() => {
-    if (initializing) return; // Espera o Firebase carregar
-
-    if (!user) {
-      router.replace("/");
-    } else {
-      router.replace("/login");
-    }
-  }, [user, initializing]);
-
   // uid === null  → não logado
   // uid !== null  → usuário logado e identificado
 
