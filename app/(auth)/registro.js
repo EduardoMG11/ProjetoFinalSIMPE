@@ -66,73 +66,92 @@ export default function TelaRegistro() {
       Alert.alert("As senhas não coincidem");
       return;
     }
-    try {
-      setLoading(true);
 
-      const userCredential = await auth().createUserWithEmailAndPassword(
-        email,
-        senha,
-      );
+    const criarConta = async () => {
+      try {
+        setLoading(true);
 
-      const uid = userCredential.user.uid;
-      let fotoURL = null;
-      if (foto) {
-        fotoURL = await fotoPerfilUrl(foto, uid);
-        console.log("Foto disponível em:", fotoURL);
+        const userCredential = await auth().createUserWithEmailAndPassword(
+          email,
+          senha,
+        );
+
+        const uid = userCredential.user.uid;
+        let fotoURL = null;
+        if (foto) {
+          fotoURL = await fotoPerfilUrl(foto, uid);
+          console.log("Foto disponível em:", fotoURL);
+        }
+        const nomePesquisa = normalizar(nomeNegocio);
+        const areaPesquisa = normalizar(area);
+        const estadoPesquisa = normalizar(estado);
+
+        console.log("Completado");
+        await Promise.all([
+          firestore().collection("usuarios").doc(uid).set({
+            nome,
+            endereco,
+            estado,
+            nomeNegocio,
+            area,
+            email,
+            foto: fotoURL,
+            nomePesquisa,
+            areaPesquisa,
+            estadoPesquisa,
+            createdAt: timestamp,
+            negociacoes: 0,
+          }),
+          firestore().collection("usuariosPublico").doc(uid).set({
+            nome,
+            endereco,
+            estado,
+            nomeNegocio,
+            area,
+            email,
+            foto: fotoURL,
+            interessadoServico: [],
+            interessadoEmpresa: [],
+            nomePesquisa,
+            areaPesquisa,
+            estadoPesquisa,
+            negociacoes: 0,
+            createdAt: timestamp,
+          }),
+        ]);
+        console.log("Completado");
+        await auth().currentUser.sendEmailVerification();
+
+        Alert.alert(
+          "Conta criada com sucesso!!",
+          "Verifique seu e-mail para fazer login. Verifique sua caixa de entrada (e spam) para validar seu e-mail.",
+          [
+            {
+              text: "OK",
+              onPress: () => router.replace("/login"),
+            },
+          ],
+        );
+      } catch (error) {
+        Alert.alert(error.message);
+      } finally {
+        setLoading(false);
       }
-      const nomePesquisa = normalizar(nomeNegocio);
-      const areaPesquisa = normalizar(area);
-      const estadoPesquisa = normalizar(estado);
-
-      console.log("Completado");
-      await firestore().collection("usuarios").doc(uid).set({
-        nome,
-        endereco,
-        estado,
-        nomeNegocio,
-        area,
-        email,
-        foto: fotoURL,
-        nomePesquisa,
-        areaPesquisa,
-        estadoPesquisa,
-        createdAt: firestore.FieldValue.serverTimestamp(),
-        negociacoes: 0,
-      });
-      await firestore().collection("usuariosPublico").doc(uid).set({
-        nome,
-        endereco,
-        estado,
-        nomeNegocio,
-        area,
-        email,
-        foto: fotoURL,
-        interessadoServico: [],
-        interessadoEmpresa: [],
-        nomePesquisa,
-        areaPesquisa,
-        estadoPesquisa,
-        negociacoes: 0,
-        createdAt: firestore.FieldValue.serverTimestamp(),
-      });
-      console.log("Completado");
-      await auth().currentUser.sendEmailVerification();
-
-      Alert.alert(
-        "Conta criada com sucesso!!",
-        "Verifique seu e-mail para fazer login. Verifique sua caixa de entrada (e spam) para validar seu e-mail.",
-        [
-          {
-            text: "OK",
-            onPress: () => router.replace("/login"),
-          },
-        ],
-      );
-    } catch (error) {
-      Alert.alert(error.message);
-    } finally {
-      setLoading(false);
-    }
+    };
+    Alert.alert(
+      "Termos de Uso",
+      "Ao continuar com esse processo, você declara que possui 18 anos ou mais",
+      [
+        {
+          text: "OK",
+          onPress: criarConta,
+        },
+        {
+          text: "Cancelar",
+          onPress: () => router.replace("/"),
+        },
+      ],
+    );
   };
 
   const pickImage = async () => {
@@ -212,7 +231,7 @@ export default function TelaRegistro() {
         />
         <TextInput
           style={styles.input}
-          placeholder="Estado (UF)"
+          placeholder="Estado (Ex.: Rio de Janeiro)"
           value={estado}
           onChangeText={setEstado}
           autoCapitalize="words"
