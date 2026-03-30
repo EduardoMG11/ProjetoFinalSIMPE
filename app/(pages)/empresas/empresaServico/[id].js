@@ -13,6 +13,7 @@ import { useRouter, useLocalSearchParams } from "expo-router";
 import { AuthContext } from "../../../context/AuthContext";
 
 export default function EmpresaServico() {
+  /* lógica de busca e exibição dos serviços da empresa  */
   const { id } = useLocalSearchParams();
   const user = useContext(AuthContext);
   const router = useRouter();
@@ -101,7 +102,7 @@ export default function EmpresaServico() {
       console.error("Erro ao demonstrar interesse:", error);
     }
   };
-
+  /* conteúdo da página  */
   return (
     <FlatList
       contentContainerStyle={styles.container}

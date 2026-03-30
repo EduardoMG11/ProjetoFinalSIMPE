@@ -14,7 +14,7 @@ export type Category = {
 };
 
 export type Data = Category[];
-
+/* Definição do que será exibido para o usuário  */
 const data: Data = [
   {
     title: "Finanças",

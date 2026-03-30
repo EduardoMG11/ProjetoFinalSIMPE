@@ -94,7 +94,7 @@ export default function OutroServico() {
       console.error("Erro ao demonstrar interesse:", error);
     }
   };
-
+  /* conteúdo principal da página  */
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {servico && (

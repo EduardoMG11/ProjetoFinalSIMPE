@@ -12,6 +12,7 @@ import { useRouter, useLocalSearchParams } from "expo-router";
 import { AuthContext } from "../../../context/AuthContext";
 
 export default function ApagarServico() {
+  /* lógica de deleção de serviço  */
   const { id } = useLocalSearchParams();
   const router = useRouter();
 
@@ -53,7 +54,7 @@ export default function ApagarServico() {
   if (!servico) {
     return <Text>Carregando...</Text>;
   }
-
+  /* conteúdo principal da página  */
   return (
     <View style={styles.container}>
       <Text style={styles.title}>

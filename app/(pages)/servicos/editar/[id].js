@@ -11,6 +11,7 @@ import firestore from "@react-native-firebase/firestore";
 import { useLocalSearchParams } from "expo-router";
 
 export default function editarServico() {
+  /* lógica de edição de serviços  */
   const { id } = useLocalSearchParams();
   const [loading, setLoading] = useState(false);
 
@@ -62,7 +63,7 @@ export default function editarServico() {
       setLoading(false);
     }
   };
-
+  /* edição de serviços - conteúdo  */
   return (
     <View style={styles.container}>
       <Text style={styles.text1}>Editar Serviço: {servico.nome}</Text>

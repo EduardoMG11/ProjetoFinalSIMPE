@@ -18,7 +18,7 @@ export default function ProcuraEmpresas() {
   const [pesquisa, setPesquisa] = useState("");
   const user = useContext(AuthContext);
   const router = useRouter();
-
+  /* lógica de busca de empresa  */
   useEffect(() => {
     if (!user || !user.uid) return;
 
@@ -96,7 +96,7 @@ export default function ProcuraEmpresas() {
 
     setEmpresas(retirarUsuario);
   }
-
+  /* conteúdo principal da página  */
   return (
     <View style={styles.container}>
       <Text style={styles.text1}>Procure por empresas para conectar</Text>

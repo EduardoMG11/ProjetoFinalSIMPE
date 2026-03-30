@@ -11,6 +11,7 @@ import firestore from "@react-native-firebase/firestore";
 import { AuthContext } from "../../context/AuthContext";
 
 export default function analise() {
+  /* busca do número de negociações  */
   const user = useContext(AuthContext);
   const [usuario, setUsuario] = useState(null);
 
@@ -43,7 +44,7 @@ export default function analise() {
       </View>
     );
   }
-
+  /* conteúdo principal da página  */
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Verifique seu uso no aplicativo!</Text>

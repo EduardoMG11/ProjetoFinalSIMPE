@@ -19,7 +19,7 @@ export default function InteressesServico() {
   const router = useRouter();
 
   const { width } = Dimensions.get("window");
-
+  /* lógicas de remoção e busca de serviços que o usuário se interessou  */
   useEffect(() => {
     const listarServicos = async () => {
       try {
@@ -65,7 +65,7 @@ export default function InteressesServico() {
       Alert.alert("Erro ao remover interesse: ", e);
     }
   };
-
+  /* conteúdo principal da página  */
   return (
     <View style={styles.container}>
       <Text style={styles.text1}>

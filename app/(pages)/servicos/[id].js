@@ -15,6 +15,7 @@ import Video from "react-native-video";
 import Carousel from "react-native-reanimated-carousel";
 
 export default function Servico() {
+  /* Lógica para a exibição dos serviços  */
   const { id } = useLocalSearchParams();
 
   const [servico, setServico] = useState(null);
@@ -36,7 +37,7 @@ export default function Servico() {
     };
     listarServico();
   }, [id]);
-
+  /* conteúdo principal da página  */
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {servico && (

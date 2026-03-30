@@ -11,6 +11,8 @@ import auth from "@react-native-firebase/auth";
 import { useRouter } from "expo-router";
 
 export default function TelaLogIn() {
+  /* lógica de log-in  */
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -53,6 +55,8 @@ export default function TelaLogIn() {
   };
 
   return (
+    /* conteúdo principal da tela  */
+
     <KeyboardAvoidingView style={styles.container}>
       <Text style={styles.text1}>
         Bem-vindo de volta. Faça login para continuar.

@@ -139,6 +139,8 @@ export default function EditarPerfil() {
   };
 
   return (
+    /* conteúdo principal da tela  */
+
     <View style={styles.container}>
       <Text style={styles.title}>Editar Perfil</Text>
       <Image

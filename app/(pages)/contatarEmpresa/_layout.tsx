@@ -4,9 +4,6 @@ import { Ionicons } from "@expo/vector-icons";
 
 export default function AppLayout() {
   const router = useRouter();
-
-  return (
-    <Stack screenOptions={{ headerTitle: "" }}/>
-   
-  );
+  /* define router e layout da página  */
+  return <Stack screenOptions={{ headerTitle: "" }} />;
 }

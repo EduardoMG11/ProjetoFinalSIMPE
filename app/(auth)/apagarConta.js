@@ -79,6 +79,8 @@ export default function ApagarConta() {
   };
 
   return (
+    /* conteúdo principal da tela  */
+
     <View style={styles.container}>
       <Text style={styles.text}>
         Uma pena ver você sair! Esperamos te ver novamente por aqui algum dia.

@@ -15,6 +15,7 @@ import * as ImagePicker from "expo-image-picker";
 import { AuthContext } from "../../context/AuthContext";
 
 export default function RegistrarServico() {
+  /* lógica de registro de serviços  */
   const [fotos, setFotos] = useState([]);
   const [video, setVideo] = useState(null);
   const [nomeServico, setNomeServico] = useState("");
@@ -202,7 +203,7 @@ export default function RegistrarServico() {
       setLoading(false);
     }
   };
-
+  /* conteúdo principal da página  */
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.text1}>Registrar Serviço</Text>

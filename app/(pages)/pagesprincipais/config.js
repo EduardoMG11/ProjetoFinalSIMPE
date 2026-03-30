@@ -4,12 +4,13 @@ import auth from "@react-native-firebase/auth";
 
 export default function Config() {
   const router = useRouter();
-
+  /* função sair  */
   async function sair() {
     await auth().signOut();
     router.dismissAll();
     router.replace("/");
   }
+  /* conteúdo principal da página  */
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Configurações</Text>

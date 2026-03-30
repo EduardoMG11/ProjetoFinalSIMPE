@@ -11,7 +11,7 @@ export default function RootLayout() {
   const segments = useSegments();
 
   const uid = user?.uid ?? null;
-
+  /* função de identificação do usuário  */
   useEffect(() => {
     const unsub = auth().onAuthStateChanged((u) => {
       setUser(u);

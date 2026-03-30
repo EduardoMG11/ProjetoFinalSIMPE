@@ -4,7 +4,7 @@ const {defineString} = require("firebase-functions/params");
 const nodemailer = require("nodemailer");
 
 setGlobalOptions({maxInstances: 10});
-
+/* Busca as credenciais do e-mail - validação para não cair na caixa de spam */
 const GMAIL_EMAIL = defineString("GMAIL_EMAIL");
 const GMAIL_PASS = defineString("GMAIL_PASS");
 
@@ -32,7 +32,7 @@ exports.enviarEmail = onRequest(async (req, res) => {
       foto.forEach((url, index) => {
         attachments.push({
           filename: `foto_${index + 1}.jpg`,
-          path: url, // O Nodemailer baixa a imagem direto do link do Storage
+          path: url,
         });
       });
     }
@@ -46,7 +46,7 @@ exports.enviarEmail = onRequest(async (req, res) => {
 
         if (urlLower.includes(".docx")) {
           extension = "docx";
-          // Quebramos a string para não passar de 80 caracteres
+          // Quebrar a string para não passar de 80 caracteres
           contentType =
             "application/vnd.openxmlformats-officedocument." +
             "wordprocessingml.document";
@@ -67,7 +67,7 @@ exports.enviarEmail = onRequest(async (req, res) => {
         });
       });
     }
-
+    /* envio do e-mail */
     await transporter.sendMail({
       from: GMAIL_EMAIL.value(),
       to: emailDestino,
@@ -88,6 +88,6 @@ ${mensagem}
     res.status(200).send("Email enviado com sucesso");
   } catch (error) {
     console.error("Erro detalhado:", error);
-    res.status(500).send(error.message); // Envia o erro real para o App
+    res.status(500).send(error.message); // Envia o erro para o App
   }
 });

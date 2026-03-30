@@ -13,6 +13,7 @@ import data from "./data";
 import Accordion from "./Accordion";
 
 export default function plataformaensino() {
+  /* conteúdo principal da página  */
   return (
     <ScrollView style={styles.container}>
       <View showsVerticalScrollIndicator={false}>

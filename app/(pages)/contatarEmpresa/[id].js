@@ -167,6 +167,8 @@ export default function ContatarEmpresa() {
   };
 
   return (
+    /* conteúdo principal da tela  */
+
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.text1}>
         {destinatario

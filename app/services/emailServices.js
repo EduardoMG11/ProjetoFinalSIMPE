@@ -1,4 +1,5 @@
 export async function enviarEmail(dados) {
+  /* ferch na api gerada pelo cloud functions  */
   const resposta = await fetch(
     "https://us-central1-simpe-9abf0.cloudfunctions.net/enviarEmail",
     {

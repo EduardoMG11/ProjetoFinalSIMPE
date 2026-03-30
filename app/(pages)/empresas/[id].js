@@ -14,6 +14,7 @@ import { useRouter, useLocalSearchParams } from "expo-router";
 import { AuthContext } from "../../context/AuthContext";
 
 export default function Empresa() {
+  /* lógica de definição da empresa  */
   const { id } = useLocalSearchParams();
   const [empresa, setEmpresa] = useState(null);
   const router = useRouter();
@@ -49,7 +50,7 @@ export default function Empresa() {
     };
     carregarUsuario();
   }, [id, user?.uid]);
-
+  /* lógica de interesse  */
   const demonstrarInteresse = async () => {
     try {
       if (!perfil) {
@@ -85,7 +86,7 @@ export default function Empresa() {
       console.error("Erro ao demonstrar interesse:", error);
     }
   };
-
+  /* conteúdo da página  */
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {empresa && (

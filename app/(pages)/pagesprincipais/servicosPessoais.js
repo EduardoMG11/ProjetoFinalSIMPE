@@ -12,6 +12,7 @@ import { useRouter } from "expo-router";
 import { AuthContext } from "../../context/AuthContext";
 
 export default function ServicosPessoais() {
+  /* busca dos serviços pessoais do usuário  */
   const user = useContext(AuthContext);
   const router = useRouter();
   const [servicos, setServicos] = useState([]);
@@ -46,7 +47,7 @@ export default function ServicosPessoais() {
   if (servicos.length === 0) {
     return <Text>Serviços não encontrados</Text>;
   }
-
+  /* conteúdo principal da página  */
   return (
     <View style={styles.container}>
       <Text style={styles.text1}>Seus serviços</Text>

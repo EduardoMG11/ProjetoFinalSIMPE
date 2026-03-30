@@ -19,7 +19,7 @@ export default function InteressesServico() {
   const router = useRouter();
 
   const { width } = Dimensions.get("window");
-
+  /* busca de interesse do usuário  */
   useEffect(() => {
     const listarEmpresas = async () => {
       try {
@@ -68,7 +68,7 @@ export default function InteressesServico() {
       Alert.alert("Erro ao remover interesse: ", e);
     }
   };
-
+  /* conteúdo principal da página  */
   return (
     <View style={styles.container}>
       <Text style={styles.text1}>

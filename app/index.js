@@ -11,7 +11,7 @@ import { useRouter } from "expo-router";
 
 export default function Index() {
   const router = useRouter();
-
+  /* conteúdo principal da página  */
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>

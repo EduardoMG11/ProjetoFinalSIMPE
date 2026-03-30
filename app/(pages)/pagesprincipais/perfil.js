@@ -16,7 +16,7 @@ export default function Perfil() {
   const router = useRouter();
   const [perfil, setPerfil] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  /* carregando o perfil para exibição  */
   useEffect(() => {
     async function carregarPerfil() {
       if (!user) return;
@@ -40,7 +40,7 @@ export default function Perfil() {
   if (!perfil) {
     return <Text>Perfil não encontrado</Text>;
   }
-
+  /* conteúdo principal da página  */
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Image source={{ uri: perfil.foto }} style={styles.image} />

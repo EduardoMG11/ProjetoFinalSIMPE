@@ -96,6 +96,8 @@ export default function EditarCredenciais() {
   };
 
   return (
+    /* conteúdo principal da tela  */
+
     <View style={styles.container}>
       <Text style={styles.title}>Editar credenciais</Text>
       <View style={styles.senha}>

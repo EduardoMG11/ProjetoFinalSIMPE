@@ -18,7 +18,7 @@ export default function ProcuraServicos() {
   const [pesquisa, setPesquisa] = useState("");
   const user = useContext(AuthContext);
   const router = useRouter();
-
+  /* procura de serviços  */
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       if (pesquisa.length < 3) {
@@ -78,7 +78,7 @@ export default function ProcuraServicos() {
       .filter((item) => item.usuario !== user.uid);
     setServicos(dados);
   }
-
+  /* conteúdo principal da página  */
   return (
     <View style={styles.container}>
       <Text style={styles.text1}>Procure por serviços para sua empresa</Text>

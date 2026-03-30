@@ -18,7 +18,7 @@ export default function EmpresasInteressadas() {
   const router = useRouter();
   const [empresas, setEmpresas] = useState([]);
   const user = useContext(AuthContext);
-
+  /* busca de empresas interessadas  */
   useEffect(() => {
     const scraping = async () => {
       try {
@@ -37,7 +37,7 @@ export default function EmpresasInteressadas() {
     };
     scraping();
   }, [user]);
-
+  /* conteúdo principal da página  */
   return (
     <View style={styles.container}>
       <Text style={styles.text1}>

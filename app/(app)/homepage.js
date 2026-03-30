@@ -7,6 +7,7 @@ export default function TelaInicial() {
   const router = useRouter(); /* redirecionamento */
 
   return (
+    /* conteúdo principal da tela  */
     <SafeAreaView style={styles.container}>
       <View style={styles.mainContent}>
         <View style={styles.header}>

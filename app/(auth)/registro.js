@@ -17,19 +17,19 @@ import { router } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 
 export default function TelaRegistro() {
-  const [cnpj, setCnpj] = useState("");
+  /* lógica de registro  */
+
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
   const [nomeNegocio, setNomeNegocio] = useState("");
   const [endereco, setEndereco] = useState("");
   const [estado, setEstado] = useState("");
-  const [telefone, setTelefone] = useState("");
   const [nome, setNome] = useState("");
-  const [sobrenome, setSobrenome] = useState("");
   const [area, setArea] = useState("");
   const [foto, setFoto] = useState(null);
   const [loading, setLoading] = useState(false);
+  /* Cria um alerta para a escolha da fonte da foto de perfil  */
 
   const escolherFonteFoto = () => {
     Alert.alert("Adicionar foto", "Escolha a origem", [
@@ -38,6 +38,8 @@ export default function TelaRegistro() {
       { text: "Cancelar", style: "cancel" },
     ]);
   };
+
+  /* transforma foto de perfil em url: disponível para todos  */
 
   const fotoPerfilUrl = async (uri, uid) => {
     try {
@@ -181,6 +183,8 @@ export default function TelaRegistro() {
   };
 
   return (
+    /* conteúdo principal da tela  */
+
     <KeyboardAvoidingView>
       <ScrollView
         contentContainerStyle={styles.container}
